@@ -106,6 +106,7 @@ fn main() {
 
 * [**Hash**](https://doc.rust-lang.org/std/hash/trait.Hash.html) – стандартный трэйт высчитывающий хеш код из объекта.
 * [**Debug**](https://doc.rust-lang.org/std/fmt/trait.Debug.html) – трэйт который декларирует "отладочный" метод преобразования в строку. Именно он используется, когда мы распечатываем объект через `{:?}` в вызове `println!`.
+* [**Default**](https://doc.rust-lang.org/std/default/trait.Default.html) - позволяет создавать дефолтное значение для типа: `0` - для чисел, `false` - для булевого типа, пустая строка - для строк.
 
 ## трэйт Clone
 
