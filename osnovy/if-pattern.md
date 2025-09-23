@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # if pattern
 
 We can also use a destructuring patterns with an if expression.

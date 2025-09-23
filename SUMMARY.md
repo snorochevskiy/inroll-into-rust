@@ -21,6 +21,7 @@
 * [Функции](osnovy/funkcii.md)
 * [Кортежи](osnovy/kortezhi.md)
 * [Владение](osnovy/vladenie.md)
+* [Лайфтаймы](osnovy/laiftaimy.md)
 * [Декларативные макросы](osnovy/deklarativnye-makrosy.md)
 * [Unsafe](osnovy/unsafe.md)
 * [Структуры](osnovy/struktury.md)
@@ -35,7 +36,6 @@
 * [Option](osnovy/option.md)
 * [Result](osnovy/result.md)
 * [if pattern](osnovy/if-pattern.md)
-* [Лайфтаймы](osnovy/laiftaimy.md)
 * [Итераторы](osnovy/iteratory.md)
 * [Умные указатели](osnovy/umnye-ukazateli.md)
 

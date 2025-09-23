@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # Умные указатели
 
 If we want to move object to the heap, we can use std::boxed::Box type.

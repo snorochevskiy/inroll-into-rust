@@ -1,10 +1,12 @@
 # Лайфтаймы
 
-When we work with multiple references, sometimes Rust cannot automatically guarantee that value references are pointing stay alive to needed moment.
+Мы уже знаем, что в Rust каждый объект имеет только одного владельца, но этот владелец может одалживать объект по ссылке в другие участки кода. При этом компилятор будет проверять, что время жизни скоупа, одолжившего объект, не больше чем время жизни владельца этого объекта.
 
-E.g. this code won’t compile:
+Теперь давайте взглянем на такой код:
 
-```
+```rust
+// Функция принимает две ссылки на строки, и возвращает ту ссылку,
+//  которая указывает более длинную строку.
 fn take_longest(x: &str, y: &str) -> &str {
     if x.len() > y.len() { x } else { y }
 }
@@ -14,15 +16,17 @@ fn main() {
 }
 ```
 
-t fails with error:
+Попытка скомпилировать этот код провалится с ошибкой:
 
 > error\[E0106]: missing lifetime specifier\
 > help: this function's return type contains a borrowed value, but the signature does not say whether it is borrowed from \`x\` or \`y\`\
 > help: consider introducing a named lifetime parameter
 
-Potential problem:
+Эта ошибка говорит, что компилятор не уверен о том, как соотносятся между время жизни владельца первой строки, время жизни владельца второй строки, и время жизни переменной, которой будет присвоен результат функции.
 
-```
+Чтобы стало понятнее, давайте взглянем на такой вариант использования функции `take_longest`:
+
+```rust
 let s1 = String::from("aaa");
 let longest;
 {
@@ -31,23 +35,27 @@ let longest;
 }
 ```
 
-To solve this problem we need to explicitly specify lifetime relations for these references:
+Как мы видим, при таком сценарии, ссылка на строку, принадлежащую переменной s2, будет записана в переменную `longest`. Проблема в том, что переменная `longest` принадлежит скоупу, который "живёт" дольше, чем скоуп в который входит `s2`. А как мы сказали выше, компилятор проверяет, что ссылка на объект не "живёт" дольше, чем переменная, которой этот объект принадлежит.
 
-```
-fn take_longest<’a>(x: &’a str, y: &’a str) -> &’a str {
+Для решения этой проблемы, необходимо явно указать как должны соотноситься между собой время жизни владельцев объектов, на которые ссылаются агрументы функции, и время жизни переменной, куда рузьтат функции будет записан.
+
+Указываются такие отношения времени жизни при помощи лайфтаймов (lifetime).
+
+```rust
+fn take_longest<'a>(x: &'a str, y: &'a str) -> &'a str {
     if x.len() > y.len() { x } else { y }
 }
-
-fn main() {
-    let l = take_longest("aaa", "bbbb");
-}
 ```
 
-This can be read as: given a lifetime “a” (arbitrary long) that is not shorter than the lifetime of function “longest”, and the lifetime of all the arguments and result type should correspond to same scope.
+Здесь в заголовке функции `take_longest<'a>` мы обяъвляем некий относительный лайфтайм `'a`. Далее, в каждоый ссылке, после знака `&` мы указываем в какому лайфтайму принадлежит ссылка.
 
-Because we have lifetime defined, this following code won’t compile:
+Запись лайфтаймов в фунции `take_longest` можно прочитать так:
 
-```
+> Cуществует некий лайтайм `'a` произвольной длины, который не короче времени жизни функции `take_longest`. Владельцев объектов, на которые ссылаются `x` и `y` должны принадлежать к одному скоупу. А время жизни переменной принимающей результат функции, не должно быть больше этого скоупа.
+
+После того, как мы задали лайфтаймы, такая попытка использовании функции `take_longest` приведёт к ошибке компиляции.
+
+```rust
 fn main() {
   let s1 = String::from("aaa");
   let longest;
@@ -59,10 +67,16 @@ fn main() {
 }
 ```
 
-## How to live with lifetimes
+## Лайфтаймы для структур
 
-If you have problems with complex lifetimes, than you are probably using too much of references.
 
-It can be reasonable if you write an OS driver, or a firmware for a device with a limited amount of RAM.
 
-In all other cases just clone the value instead of taking a reference, and you won’t face lifetime related problems.\
+## 'static лайфтайм
+
+
+
+## Сложности работы с лайфтаймами
+
+Как правило, для тех, кто начинает изучать Rust, именно лайфтаймы становятся наиболее сложным в использовании инструментом. Поэтому, если на первых порах, вы испытываете сложности с написание лайфтаймов, то рекомендуется не заморачиваться со сложными связями между ссылками, а просто использовать `.clone()` для получения копии объекта.
+
+Позднее, когда вы лучше  освоителесь с языком, вы можно будет углубиться в лайфтаймы отдельно.
