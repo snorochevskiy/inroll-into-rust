@@ -450,3 +450,27 @@ where
 }
 ```
 
+## Специализация трэйта
+
+```rust
+struct Holder<T> {
+    v: T
+}
+
+impl Holder<i32> {
+    fn inc(&mut self) {
+        self.v += 1;
+    }
+}
+
+fn main() {
+    let mut h = Holder { v: 1 };
+    h.inc();
+}
+```
+
+TODO
+
+## const генерики
+
+TODO

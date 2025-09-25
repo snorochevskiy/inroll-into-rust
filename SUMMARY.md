@@ -35,7 +35,7 @@
 * [Перечисления](osnovy/perechisleniya.md)
 * [Option](osnovy/option.md)
 * [Result](osnovy/result.md)
-* [if pattern](osnovy/if-pattern.md)
+* [From и Into](osnovy/from-i-into.md)
 * [Итераторы](osnovy/iteratory.md)
 * [Умные указатели](osnovy/umnye-ukazateli.md)
 
