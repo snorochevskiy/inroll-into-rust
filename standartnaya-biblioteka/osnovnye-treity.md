@@ -10,6 +10,7 @@ From the “Rust basics” presentation we already know about such standard trai
 * `PartialOrd`, `Ord` – defines ordering for sorting.
 * `Deref` – allows take a reference of a given type from the object.
 * `AsRef`\<T> – defines _as\_ref()_ method that provides \&T
+* Borrow (str.ts) - impl Borrow for String
 * `Iterator` – allows to iterate over object elements
 
 There are also following commonly used traits:
