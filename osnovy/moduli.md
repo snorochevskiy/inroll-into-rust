@@ -70,7 +70,7 @@ fn main() {
 
 Например, допустим мы создали такой лэйаут файлов:
 
-<img src="../.gitbook/assets/file.excalidraw (1) (1).svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (1) (1) (1).svg" alt="" class="gitbook-drawing">
 
 При компиляции main.rs, будет скомпилирован и my\_module.rs.
 
@@ -86,7 +86,7 @@ $ ./main
 
 Таким образом сделуюет создавать модуль, если он состоит из нескольки файлов:
 
-<img src="../.gitbook/assets/file.excalidraw (1).svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (1) (1).svg" alt="" class="gitbook-drawing">
 
 При компиляции main.rs, компилятор так же соберёт все подключённые модули.
 

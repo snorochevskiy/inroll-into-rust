@@ -1,35 +1,54 @@
----
-hidden: true
----
-
 # Умные указатели
 
-If we want to move object to the heap, we can use std::boxed::Box type.
+До этого момента, явно мы работали только с данными, размещаемыми на стаке. Мы, конечно, рассмотрели много примеров с векторами и строками, которые хранят свои элементы в куче, однако эти типы инкапсулируют работу с кучей в себе, полностью скрывая её от нас. В этой же главе мы явно разберём работу с чучей при помощи умных указателей.
 
-Box consists of a pointer to the heap where the actual data is stored, but the Box itself resides on the stack.
+{% hint style="info" %}
+Умный указатель (smart pointer) — термин пришедший из C++, где в отличии от C, в котором указатель является просто ячейкой хранящей в себе адресс, умный указатель представляет из себя класс, который не просто предоставляет доступ к данным по адресу, но и умеет автоматически очищать память при исчезновении умного указателя на неё.
+{% endhint %}
 
-Box owns the data it points to, and we can say it is a direct analogy for _unique\_ptr_ in C++.
+## Box
+
+Первым указателем, который мы рассмотрим является [**Box**](https://doc.rust-lang.org/std/boxed/struct.Box.html). Мы уже вскольз упоминали его в разделе [#vozvrat-treita-iz-funkcii](treity.md#vozvrat-treita-iz-funkcii "mention").
+
+`Box<T>` - это обобщённый тип, который хранит адрес значения тип `T`, размещённого в куче в куче. `Box` является владельцем данных в куче, т.е. при выходе переменной `Box` из скоупа, происходит автоматическая освобождения соответствующей памяти в куче.
+
+{% hint style="info" %}
+Проводя аналогию с C++, `Box` является прямым аналогом умного указателя `unique_ptr`.
+{% endhint %}
+
+С точки зрения лэйату в памяти, Box является так называемой "zero cost abstraction". То есть представляет из себя просто ячейку с адресом, которая располагается на стеке, и не более.
 
 <img src="../.gitbook/assets/file.excalidraw (4).svg" alt="" class="gitbook-drawing">
 
-The syntax:
+Наиболее просто способ создать `Box` — метод-конструктор `Box::new(T)`, который принимает в качестве аргумента значение, и переносит это значение на кучу. Рассмотрим пример:
 
-```
+```rust
+// Структура для хранения координат точки в двухмерном пространстве
 struct Point2D { x: i32, y: i32 }
 
 fn main() {
-    let p: Point2D = Point2D {x: 5, y: 2}; // Creating object on the stack
-    let b: Box<Point2D> = Box::new(p);     // Moving from the stack to the heap
+    let p: Point2D = Point2D {x: 5, y: 2}; // Создаём значение на стеке
+    let b: Box<Point2D> = Box::new(p);     // Перемещаем значение в кучу
 }
 ```
 
-Box – is a, so called “zero cost abstraction”, meaning it compiles into a regular pointer.
+Чем нам может быть полезно такое хранение значений в куче? Дело в том, что для того, чтобы значение можно было хранить на стеке, его размер должен быть известен во время компиляции, как например, с этой структурой `Point2D`: значение всегда будет одинаковым (два поля размером `i32`). Однако полный размер таких структур как вектор не известен на этапе компиляции, так как количество элементов вектора не известно.
 
-To keep a value on the stack, the compiler should be able to determine the size of the value at the compile type, which is impossible for types like String and Vec.
+Для наглядности, давайте напишем классическую структуру данных — односвязанный список.
 
-E.g. it is not possible to know the size of a linked list at the compile time
+<img src="../.gitbook/assets/file.excalidraw (16).svg" alt="" class="gitbook-drawing">
 
-\`\`
+На первый взгляд, эту конструкцию можно было бы описать так:
+
+```rust
+// Список — это:
+enum List<T> {
+    Nil,              // либо пустой список
+    Elem(T, List<T>), // либо пара: значение + список
+}
+```
+
+Однаком компилятор выдаст такую ошибку:
 
 ```rust
 enum List<T> {
@@ -42,13 +61,13 @@ enum List<T> {
 //           ++++       +
 ```
 
-Wrapping into a Box (i.e. moving to the heap) solves this problem.
+Это как раз то, о чём мы говорили раньше: рекурсивная структура имеет неопределённый размер, что делает невозможным её размещение на стеке. Компилятор любезно предлагает использовать нам `Box`, что как раз решит проблему:
 
 ```rust
 #[derive(Debug)]
 enum List<T> {
-    Nil,                   // empty list
-    Elem(T, Box<List<T>>), // an element and pointer to the tail
+    Nil,
+    Elem(T, Box<List<T>>),
 }
 
 use List::*;
@@ -56,21 +75,18 @@ use List::*;
 fn main() {
     let list: List<i32> =
         Elem(1, Box::new(
-            Elem(2, Box::new(Nil))
-        ));
-    println!("{:?}", list); // Elem(1, Elem(2, Nil))
+            Elem(2, Box::new(
+                Elem(3, Box::new(Nil))
+        ))));
+    println!("{:?}", list); // Elem(1, Elem(2, Elem(3, Nil)))
 }
 ```
 
-Note that this list doesn’t allow to mutate elements, because each element is already referenced by a reference, meaning we cannot take one more mutable reference.
+## Трэйты Deref и DerefMut
 
-We will see how to solve this problem later.
+`Box` позволяет использовать оператор `*` для разыменовывание бокса, словно это сслыка. Так же при помощи оператора `&` из бокса можно получить прямую ссылку на данные в куче.
 
-## Trait Deref
-
-Box allows to use indirection operator `*` as if the box is a regular reference, and use `&` operator to get direct reference to the data “inside” the box;
-
-```
+```rust
 fn main() {
     let mut b = Box::new(1);
     *b = 2;
@@ -85,97 +101,144 @@ fn increment(i: &mut i32) {
 }
 ```
 
-This is possible, because Box implements special trait – Deref.
+Такое поведение бокса (словно он ссылка) возможно благодаря тому, что `Box` реализует трэйт [**Deref**](https://doc.rust-lang.org/std/ops/trait.Deref.html).
 
-```
+```rust
 pub trait Deref {
     type Target: ?Sized;
     fn deref(&self) -> &Self::Target;
 }
 ```
 
-Compiler replaces `*mybox` with `*(mybox.deref())`
+Этот трэйт позволяет типу предоставлять некую ссылку. Разумеется, в случае с `Box`, это ссылка на данные в куче.
 
-## Sharing data with Rc
+Если тип реализует трэйт `Deref`, то для его объектов компилятор подменяет `&объект` на `объект.defer()`.
 
-Rust ownership principles doesn’t allow to share data (each object is owned only by one variable, and the object is deleted when the owned goes out of the scope), but in reality the are types of functionalities that require data sharing.
+Как мы могли заметить, метод `deref` возвращает немутабельную ссылку. Для случаев, когда мы хотим иметь возможность изменять значение по ссылке, существует трэйт [**DerefMut**](https://doc.rust-lang.org/std/ops/trait.DerefMut.html).
 
-To share data we use Rc type, which is similar to Box, but in addition to the pointer to the heap, it also has a counter internally shared between all Rc copies.
+```rust
+pub trait DerefMut: Deref {
+    fn deref_mut(&mut self) -> &mut Self::Target;
+}
+```
 
-* If we clone an Rc object, we just create a copy of the Rc pointer and increment the reference counter
-* When the Rc object is destroyed, the reference counter is decremented
-* When the reference counter hits zero, the object in heap is deleted
+Вызов `*объект=значение` подменяется на `*(объект.deref_mut())=значение`.
+
+## Rc - совместное владение
+
+Концепция владения Rust не позволяет совместное владение одним и тем же объектом, однако есть целый ряд структур данных, где это необходимо (например, двусвязанный список). Для таких ситуация стандартная библиотека Rust предоставляет умный указатель [**Rc**](https://doc.rust-lang.org/std/rc/struct.Rc.html).
+
+В отличии от `Box<T>`, который по сути представляет из себя просто указатель на данные в куче, `Rc<T>` — структура из двух полей: указатель на данные в куче и указатель на счётчик копий объекта `Rc`.
+
+```rust
+use std::rc::Rc;
+
+fn main() {
+    let mut rc1 = Rc::new("Hello");
+    let mut rc2 = rc1.clone();
+}
+```
+
+Когда мы создаём новый объект при помощи `Rc::new(значение)`
+
+1. На стеке создаётся объект стуктуры `Rc`
+2. На куче выделяется место для данных, и в него переносится значение переданное в `Rc::new()`. Адрес значения в куче присваивается полю-указателю на данные в объекте `Rc`.
+3. На куче выделяется место под счётчик копий `Rc` и инициализируется единицей. Адрес этого счётчика присваивается полю-указателю на счётчик в объекте `Rc`.
+
+Когда мы слонируем объект `Rc`:
+
+1. На стеке создаётся создаётся новый объект `Rc`.
+2. Значение указателя на данные копируется из клонируемого объекта `Rc`.
+3. Значение указателя на счётчик числа копий `Rc` копируется из клонируемого объекта `Rc`, при этом сам счётчик инкрементируется.
+
+Когда переменная, хранящая объект `Rc`, выходит из скоупа:
+
+1. Счётчик копий `Rc` уменьшается на `1`.
+2. Если при этом значение счётчика стало равным `0`, то память, в которой хранятся данные, и память, в которой хранится сам счётчик, очищаются.
 
 <img src="../.gitbook/assets/file.excalidraw (5).svg" alt="" class="gitbook-drawing">
 
-An equivalent of RC in C++ is _shared\_ptr_.
+{% hint style="info" %}
+Проводя аналогию с C++, `Rc` является прямым аналогом умного указателя `shared_ptr`.
+{% endhint %}
 
-Example:
+## Cell
 
-```
-use std::{rc::Rc, borrow::BorrowMut};
-#[derive(Debug)]
-struct City {
-    name: String,
-    country: Rc<String>
-}
+Основное неудобство `Rc` заключается в том, что в отличии от `Box`, он не реализует трэйт `DerefMut`, что в свою очередь не позволяет менять его содержимое.
+
+```rust
+use std::rc::Rc;
 
 fn main() {
-    let us = Rc::new("USA".to_string());
-    let ny = City {name: "New York".to_string(), country: us.clone() };
-    let odessa = City {name: "Odessa".to_string(), country: us.clone() };
-
-    println!("{:?}", odessa); // City { name: "Odessa", country: "USA" }
+    let mut rc1 = Rc::new(1);
+    *rc1 += 1;
+ // ^^^^^^^^^ cannot assign
+ // trait `DerefMut` is required to modify through a dereference,
+ // but it is not implemented for `Rc<i32>`
 }
 ```
 
-## Mutable Rc
+Почему так сделано? Давайте вспомнил правило безопасности ссылок в Rust [#bezopasnost-ssylok-referential-safety](vladenie.md#bezopasnost-ssylok-referential-safety "mention"): на объект одновременно можно иметь либо одну немутабельную ссылку, либо сколько угодно мутабельных. И само это правило обусловлено тем, что в общем случае без дополнительных механизмов синхронизации, нельзя гарантировать корректность немутабельной ссылки, после того как данные были изменены по мутабельной ссылке.
 
-`Cell<T>` is a wrapper type that behaves like an immutable value, but allows to replace the value it hold inside with a new value.
+Именно поэтому `Rc` и позволяет множественное владение одним и тем же объектом (аналог множества немутабельных ссылок), но без возможнсти менять значение.
 
-```
+Как мы заметили выше, одновременное наличие немутабельно и мутабельной ссылок не безопасно БЕЗ дополнительных механизмов синхронизации. Стандартная библиотека Rust предлагает механизм синхронизации специльно для таких ситуаций — структура-обёртка [**Cell**](https://doc.rust-lang.org/std/cell/struct.Cell.html).
+
+`Cell<T>` — обёртка, которая позволяет заменять своё содержимое целиком, безопасно и атомарно. При этом не позволяет получать мутабельную ссылку на своё содержимое, что предотвращает возможности "порчи данных", а так же не позволяет получать немутабельную ссылку, которая могла бы стать недействительной при замене значения в `Cell`.
+
+```rust
 use std::cell::Cell;
 
 fn main() {
-    let c1 = Cell::new(1);
-    println!("c1={}", c1.get()); // c1 = 1
+    let cell = Cell::new("aaa".to_string());
 
-    c1.set(2);
-    println!("c1={}", c1.get()); // c1 = 2
-    
-    let prev = c1.replace(3);
-    println!("prev={}, c1={}", prev, c1.get()); //prev = 2, c1 = 3
+    // При замещении новым значение, прошлое возвращается как результат
+    let old_string = cell.replace("bbb".to_string());
+    println!("{old_string}");
 
-    let c2 = Cell::new(5);
-    c1.swap(&c2);
-    println!("c1={}, c2={}", c1.get(), c2.get()); // c1 = 5, c2 = 3
+    // Если нам не нужно прошлое значение, то можно просто перезаписать его новым.
+    cell.set("ccc".to_string());
 }
 ```
 
-Cell is not thread safe.
+Обратите внимание: переменная `cell` объявлена без модификатора `mut`, однако мы смогли заместить хранящуюся в ней строку, другой строкой. Так происходит, потому что замена значения происходит атомарно и безопасно, поэтому переменной не обязательно иметь семантику мутабельности со всеми сопутствующими ограничениями.
 
-Now using a combination of Rc and Cell we can have an object that can be both shared among multiple owners (not in different threads) an mutated.
+Если тип реализует интерфейс `Copy`, то из `Cell` можно извлекать его копию методом `get`.
 
+```rust
+use std::cell::Cell;
+
+fn main() {
+    let cell = Cell::new(1);
+    println!("{}", cell.get()); // c1 = 1
+}
 ```
+
+Теперь, используя комбинацию `Rc<Cell<T>>`, мы можем создавать структуры данных, которые требуют как совместное владение, так и возможность заменять хранимое значение.
+
+```rust
 use std::{cell::Cell, rc::Rc};
 
 fn main() {
     let rc1 = Rc::new(Cell::new(1));
     let rc2 = rc1.clone();
 
+    //  Получаем ссылку на разделяемый Cell и записываем в него новое значение
     rc2.as_ref().set(5);
 
     println!("{:?}", rc1); // Cell { value: 5 }
 }
 ```
 
+{% hint style="info" %}
+Важно заметить, что Cell защищает только от сценариваем порчи немутабельной ссылки петём изменения данных через мутабельную ссылку в рамках одного потока. Какой либо защиты от гонок данных Cell не предоставляет.
+{% endhint %}
+
 ## RefCell
 
-When Cell allows only the replacement of the nested data, RefCell\<T> allows the editing.
+Очевидным недостатком `Cell` является то, что он позволяет только заменять хранимое значение, но не модифицировать. Обёртка `RefCell<T>` позволяет как раз изменять хранимое значение по ссылке.
 
-RefCell\<T> can loan a reference to the nested data to the caller code. And this reference can be used to read or mutate data (if we have borrowed a mutable reference).
-
-```
+```rust
 use std::cell::{RefCell, RefMut};
 
 fn main() {
@@ -188,9 +251,10 @@ fn main() {
 }
 ```
 
-RefCell keeps track of borrowed references, because RefCell doesn’t allow to borrow immutable and mutable references simultaneously. That’s why it still provides borrow-checker like safety, but just moves this check from the compile time to the run time.
+`RefCell` не нарушает правило безопасности ссылок, а просто переносит проверку из времени компиляции в рантайм. То есть, попытка получить одновременно мутабельную и мутабельную ссылкы на содержимое `RefCell` вызовет панику.
 
-```
+{% code lineNumbers="true" %}
+```rust
 use std::cell::{RefCell, RefMut, Ref};
 
 fn main() {
@@ -199,15 +263,16 @@ fn main() {
     let immut_ref: Ref<'_, i32> = ref_cell.borrow(); // borrowing immutable
 
     let mut mut_ref: RefMut<'_, i32> = ref_cell.borrow_mut();
-    *mut_ref = 5;                      ^^^ already borrowed: BorrowMutError
+    *mut_ref = 5;                   // ^^^ already borrowed: BorrowMutError
     
     println!("{:?}", ref_cell);
 }
 ```
+{% endcode %}
 
-Now we can rewrite the Linked list implementation from example from Box paragraph.
+Теперь, мы можем переписать наш односвязанный список с использование `RefCell`:
 
-```
+```rust
 use std::rc::Rc;
 use std::cell::RefCell;
 
@@ -228,18 +293,26 @@ fn main() {
     let c = Elem(Rc::new(RefCell::new(3)), Rc::clone(&a));
 
     *v.borrow_mut() += 10;
-
     println!("a after = {:?}", a);
+    // Elem(RefCell { value: 11 }, Nil)
+    
     println!("b after = {:?}", b);
+    // Elem(RefCell { value: 2 }, Elem(RefCell { value: 11 }, Nil))
+    
     println!("c after = {:?}", c);
+    // Elem(RefCell { value: 3 }, Elem(RefCell { value: 11 }, Nil))
 }
 ```
 
 ## Arc
 
-Rc allows to share an object, but it is not thread safe. If we need to share an object between concurrent flows, we need to use Arc – thread safe version of Rc.
+`Rc` позволяет совместное владением над объектом, однаком `Rc` не является потокобезопасным типое, то есть, не позволяет совместное владение объектом из разных потоков. Для многопоточной среды имеется потокобезопасная версия - `Arc`.
 
-```
+{% hint style="info" %}
+Мы будем разбирать многопоточное программирование на Rust в главе [mnogopotochnost.md](../standartnaya-biblioteka/mnogopotochnost.md "mention"). Пока что можете не углубляться в нижеприведённый пример, а просто запомнить, что при многопточном программировании вместо `Rc` используется `Arc`.
+{% endhint %}
+
+```rust
 use std::sync::{Arc, Mutex, MutexGuard};
 use std::thread;
 
@@ -252,8 +325,8 @@ fn main() {
     let t = thread::spawn(move || {
       for _ in 0 .. 50 {
         let mut mut_guard: MutexGuard<'_, i32> = counter_clone.lock().unwrap();
-        *mut_guard += 1; // MutexGuard provides reference like access to data
-      } // MutexGuard goes out of the scope, and releases the mutex
+        *mut_guard += 1; // MutexGuard имеет семантику мутабельной ссылки
+      } // MutexGuard выходит из скоупа, и разблокирует мьютекс
     });
     threads.push(t);
   }

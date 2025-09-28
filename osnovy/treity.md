@@ -137,7 +137,7 @@ fn print_introduction_$Dog(v: &Dog) {
 
 Таким образом, каждый из сгенерированных вариантов функции `print_introduction` будет знать с каким именно конкретным типом он работает, а значит ему будет известне адрес нужного метода `introduce` именно для того типа, с которым работает этот вариант `print_introduction`.
 
-<img src="../.gitbook/assets/file.excalidraw (2).svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (2) (1).svg" alt="" class="gitbook-drawing">
 
 Все адреса методов статичны, поэтому диспетчеризация и называется статической.\
 
@@ -176,7 +176,7 @@ fn main() {
 
 Чтобы всё это работало, когда объект передаётся в функцию как `dyn Трэйт`, комплятор передаёт в эту функцию не только адрес объекта, но и адрес соответствующей vtable.
 
-<img src="../.gitbook/assets/file.excalidraw (3).svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (3) (1).svg" alt="" class="gitbook-drawing">
 
 Эта `dyn Трэйт`, который состоит из пары (ссылки на значение, ссылка на vtable), называется **трэйт объектом** (**trait object**).
 
