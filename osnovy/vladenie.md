@@ -175,7 +175,7 @@ vector.push(2);
 vector.push(3);
 ```
 
-<img src="../.gitbook/assets/file.excalidraw.svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (1).svg" alt="" class="gitbook-drawing">
 
 2\) Дальше мы берём немутабельную ссылку на второй элемент вектора. Эта ссылка "указывает" непосредственно на адрес в памяти, по которому хранится второй элемент.
 
@@ -183,7 +183,7 @@ vector.push(3);
 let reference: &i32 = &vector[1];
 ```
 
-<img src="../.gitbook/assets/file.excalidraw (1).svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (1) (1).svg" alt="" class="gitbook-drawing">
 
 3\) Ссылка на второй элемент еще "жива", но теперь мы берём еще и мутабельную ссылку на весь вектор целиком. С её помощью мы добавляем в вектор еще один элемент. Буфер вектора был уже заполнен, поэтому в куче аллоцируется новый буфер большего размера, и в него копируются все элементы из старого буфера. После этого в новый буфер добавляет новый элемент, а старый буфер очищается из памяти.
 
