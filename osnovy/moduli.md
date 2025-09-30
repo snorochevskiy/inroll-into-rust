@@ -70,7 +70,7 @@ fn main() {
 
 Например, допустим мы создали такой лэйаут файлов:
 
-<img src="../.gitbook/assets/file.excalidraw (1) (1) (1) (1).svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (1) (1) (1) (1) (1).svg" alt="" class="gitbook-drawing">
 
 При компиляции файла `main.rs`, так же будет подключен и скомпилирован и `my_module.rs`.
 
@@ -86,7 +86,7 @@ $ ./main
 
 Этот способ используется, когда функциональность модуля хорошо гранулирована и может быть разделена на несколько файлов:
 
-<img src="../.gitbook/assets/file.excalidraw (1) (1) (1).svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (1) (1) (1) (1).svg" alt="" class="gitbook-drawing">
 
 При компиляции `main.rs`, компилятор так же соберёт все подключённые модули.
 

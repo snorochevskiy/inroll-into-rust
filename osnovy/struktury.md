@@ -343,7 +343,7 @@ fn main() {
 
 В памяти это выглядит так:
 
-<img src="../.gitbook/assets/file.excalidraw.svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (1).svg" alt="" class="gitbook-drawing">
 
 Здесь хорошо видно как выравнивание и паддинги.
 
