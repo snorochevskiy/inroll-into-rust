@@ -338,7 +338,3 @@ fn main() {
   println!("{:?}", counter);
 }
 ```
-
-## Cow
-
-TODO
