@@ -48,6 +48,7 @@
 ## Стандартная библиотека
 
 * [Основные трейты](standartnaya-biblioteka/osnovnye-treity.md)
+* [Глобальные данные](standartnaya-biblioteka/globalnye-dannye.md)
 * [Newtype pattern](standartnaya-biblioteka/newtype-pattern.md)
 * [Файловая система](standartnaya-biblioteka/failovaya-sistema.md)
 * [Многопоточность](standartnaya-biblioteka/mnogopotochnost.md)

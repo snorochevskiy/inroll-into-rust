@@ -260,6 +260,57 @@ fn main() {
 
 Практическое применение таких структур станет понятно после прочтения главы [treity.md](treity.md "mention").
 
+## Лайфтаймы у структур
+
+В главе [laiftaimy.md](laiftaimy.md "mention") мы узнали, что такое лайфтаймы в целом, и как задавать их для функций. Теперь давайте разберёмся с лайфтаймами для структур.
+
+Если у структуры есть поле, в котором хранится ссылка, то для этой ссылки надо указывать лайфтайм. Это нужно, что того, чтобы компилятор мог сопоставить время жизни поля-ссылки, и время жизни объекта, ссылка на который хранится в поле сруктуры.
+
+Рассмотрим пример. У нас будет строка `String`, которая хранит имя и фамилию, разделённые пробелом. И мы сделаем структуру, с двумя полями: ссылка на часть строки, где хранится имя, и ссылка на часть строки, где хранится фамилия.
+
+{% code lineNumbers="true" %}
+```rust
+#[derive(Debug)]
+struct NameComponents<'a> {
+    first_name: &'a str,
+    last_name: &'a str,
+}
+
+fn main() {
+    let full_name = "John Doe".to_string();
+
+    let space_position = full_name.find(" ").unwrap();
+
+    let components = NameComponents {
+        first_name: &full_name[0..space_position],
+        last_name: &full_name[space_position + 1 ..],
+    };
+    println!("{components:?}");
+    // NameComponents { first_name: "John", last_name: "Doe" }
+}
+```
+{% endcode %}
+
+Благодаря лайфтайму, компилятор проконтроллирует, чтобы объект структуры `NameComponents` не "пережил" объект строки, на который ссылаются его поля. Например, такой вариант не скомпилируется:
+
+```rust
+fn main() {
+    let components;
+    {
+        let full_name = "John Doe".to_string();
+
+        let space_position = full_name.find(" ").unwrap();
+
+        // Error: `full_name` does not live long enough
+        components = NameComponents {
+            first_name: &full_name[0..space_position],
+            last_name: &full_name[space_position + 1 ..],
+        };
+    }
+    println!("{components:?}");
+}
+```
+
 ## Лэйаут в памяти
 
 {% hint style="warning" %}
