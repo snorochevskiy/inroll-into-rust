@@ -161,6 +161,6 @@ for i in 0 .. 10 {
 Чтобы перебрать числа от `0` до `10` (включительно), надо вместо `0 .. 10` указать `0 ..= 10`.
 
 {% hint style="info" %}
-Детальнее о цикле for мы поговорим в главах [vladenie.md](vladenie.md "mention") и [iteratory.md](iteratory.md "mention")
+Детальнее о цикле for мы поговорим в главах [ownership.md](ownership.md "mention") и [iterators.md](iterators.md "mention")
 {% endhint %}
 

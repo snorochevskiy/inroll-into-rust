@@ -420,7 +420,7 @@ fn print_introduction<T>(v: T) where T: CanIntroduce {
 
 ## Границы генерика и impl Трэйт
 
-Давайте еще раз взглянем на функию `print_introduction` из раздела [#granicy-generikov](generiki.md#granicy-generikov "mention").
+Давайте еще раз взглянем на функию `print_introduction` из раздела [#granicy-generikov](generics.md#granicy-generikov "mention").
 
 ```rust
 fn print_introduction<T: CanIntroduce>(v: T) {
@@ -558,10 +558,3 @@ fn main() {
     println!("{arr:?}"); // [1, 1, 1, 1, 1]
 }
 ```
-
-
-
-
-
-
-

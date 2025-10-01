@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # Юнит тесты
 
 It is a common practice to write test in the same file with the source code.

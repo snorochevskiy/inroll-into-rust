@@ -1,6 +1,16 @@
-# Лэйаут проекта
+---
+hidden: true
+---
+
+# Структура проекта
+
+
+
+
 
 A common Rust project layout usually looks like following:
+
+
 
 ```
 .
