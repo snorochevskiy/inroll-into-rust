@@ -1,49 +1,104 @@
 # Cargo
 
-Rust distribution comes with a powerful build tool called Cargo.
+Использовать напрямую компилятор `rustc` можно для сборки небольших тестовых програм, однако при написании реального приложения, которое использует сторонние библиотеки, не обойтись без системы сборки.
 
-Similar to Maven, Cargo also able to automatically download required dependencies from a remote repository.
+В большинстве языков программирования, система сборки поставляется отдельно от тулчейна самого языка. Например, в Java популярны Maven и Gradle, которые распостраняются отдельно от JDK. Но в случае с Rust, когда мы утилитой `rustup` устанавливаем Rust тулчейн, мы сразу получаем и систему сборки  — Cargo.
 
-Crates (Rust packages) are distributed in a form of the source code, which makes the first compilation relative slow, but the resulting code is highly optimized.
+Cargo умеет:
 
-Out of the box Cargo supports things like:
+* собирать исполняемый файл / библиотеку
+* автоматически скачивать и компилировать зависимости (библиотеки)
+* запускать юнит и интеграционные тесты
+* запускать бенчмарки, и агрегировать результаты
+* скачивать и собирать различные утилиты из экосистемы Rust
 
-* building an executable binary
-* building a shared library
-* running unit / integration tests
-* benchmarking
-* compiling and testing examples (if we develop a library or a framework)
+## Создание проекта
 
-With the help of Cargo we can create a Rust project just with one command:
+Для того чтобы создать новый Rust проект, управляемый системой сборки Cargo, нужно выполнить команду `cargo new имя_проекта`.
+
+Для примера, создадим hello world проект:
 
 ```
 cargo new hello_world --bin
 ```
 
-The project layout will look like:
+Опция `--bin` указывает, что мы хотим создать исполняемую программу. Если бы мы хотели создать библиотеку, то следовало бы указать опцию `--lib`.
+
+Cargo создаст такое дерево каталогов:
 
 ```
+hello_world/
 ├── Cargo.toml
-└── src
+└── src/
     └── main.rs
 ```
 
-Configuration consists if single Cargo.toml file which usually looks like:
+Это стандартная структура Cargo проекта:
 
+* исходный код располагается внтури директории `src`. Если мы создаём исполняемую программу, то главным файлом программы является `main.rs`. Если мы создаём библиотеку, то главным файлом является `lib.rs`
+* `Cargo.toml` — файл конфигурции проекта, из которого Cargo берёт основные настройки
+
+Сам `src/main.rs`, в нашем примере, должен выглядеть примерно так:
+
+```rust
+fn main() {
+    println!("Hello, world!");
+}
 ```
+
+## Cargo.toml
+
+Файл `Cargo.toml` содержит конфигурацию проекта на языке TOML (Tom's Obvious, Minimal Language).
+
+Сразу после создания, наш `Cargo.toml` должен выглядеть примерно так:
+
+```toml
 [package]
-name = "my-rust-aws-lambda"
+name = "hello_world"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
 [dependencies]
-lambda_runtime = "0.6.0"
-serde = "1.0.136"
-tokio = { version = "1", features = ["full"] }
 ```
 
-To build a release executable (with code optimizations):
+Секция `package` содержит основную информацию о проекте:
+
+* name — имя. По умочанию, имя исполняемого файла будет таким же, как имя проекта.
+* version — версия программы или библиотеки.
+* edition — версия языка  Rust, которой соответствует код программы. [Подробнее](https://doc.rust-lang.org/edition-guide/editions/).
+
+Секция `dependencies` служит для указания внешних зависимостей программы (библиотек). О них мы поговорим позже.
+
+## Сборка и запуск
+
+Для того, чтобы собрать исполняемый файл надо воспользоваться командой
+
+```
+cargo build
+```
+
+После этого исполяемый файл должен появится в поддиректории `target/debug`. Запустим его, чтобы убедиться, что он работает:
+
+```
+$ ./target/debug/hello_world 
+Hello, world!
+```
+
+Как вы могли догадаться по имени директории `target/debug`, Cargo по-умолчанию собрал исполняемый файл с отладочными настройками. Если нам нужна оптимизированная релизная сборка без отладочной информации, то в команду сборки нужно передать флаг `--release`.
 
 ```
 cargo build --release
+```
+
+Исполняемый файл появится в директории `target/release`.
+
+***
+
+Так же, у Cargo есть команда, которая объединяет сборку и запуск — `run`:
+
+```
+$ cargo run
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.01s
+     Running `target/debug/hello_world`
+Hello, world!
 ```
