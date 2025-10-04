@@ -6,11 +6,37 @@ hidden: true
 
 Настало время детально поговорить о структуре Cargo проекта.
 
+Мы уже знаем, что Cargo создаёт проект с файлом конфигурации проекта `Cargo.toml` и файлом с кодом  `src/main.rs`.
 
+```
+├── Cargo.toml
+└── src/
+    └── main.rs
+```
 
-A common Rust project layout usually looks like following:
+После разростания программы и добавления [модулей](../rust-basics/moduli.md), мы получаем что вроде такого:
 
+```
 
+├── Cargo.toml
+└── src/
+    ├── main.rs
+    ├── module1.rs
+    └── module2/
+        ├── mod.rs
+        ├── module2_file1.rs
+        └── module2_file2.rs
+```
+
+Но что еще может быть в нашем проекте?
+
+## Несколько исполняемых файлов
+
+Как мы знаем, когда мы создаём исполняем программу, то главным файлом является `src/main.rs`. Но что делать, если мы хотим сделать несколько исполняемых файлов, которые переимпользуют одни и те же модули?
+
+В таком случае мы можем создать сколько угодно дополнительных исполняемых файлов в каталоге `src/bin`.
+
+## Интеграционные тесты
 
 ```
 .
@@ -26,30 +52,3 @@ A common Rust project layout usually looks like following:
     └── integration-tests.rs
 ```
 
-## Многомодульный проект
-
-
-
-```
-my-multimodule-project/
-  ├── Cargo.toml
-  ├── core/
-  │     ├── src/
-  │     │     ├── lib.rs
-  │     │     ├── config.rs
-  │     │     ├── dao.rs
-  │     │     ├── service.rs
-  │     │     └── util.rs
-  │     └── Cargo.toml
-  ├── web/
-  │     ├── src/
-  │     │     ├── main.rs
-  │     │     ├── routs.rs
-  │     │     └── auth.rs
-  │     └── Cargo.toml
-  └── cli/
-        ├── src/
-        │     └── main.rs
-        └── Cargo.toml
-
-```

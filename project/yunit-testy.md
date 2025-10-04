@@ -4,7 +4,9 @@ hidden: true
 
 # Юнит тесты
 
-It is a common practice to write test in the same file with the source code.
+В Rust принято писать юнит-тесты в том же файле, в котором находятся тестируемые функции.
+
+Юнит-тест — представляет из себя функцию помеченную аннотацией `#[test]`.
 
 ```
 fn inc(a: i32) -> i32 {
