@@ -2,7 +2,9 @@
 hidden: true
 ---
 
-# Юнит тесты
+# Тесты
+
+Unit тестирование
 
 В Rust принято писать юнит-тесты в том же файле, в котором находятся тестируемые функции.
 
@@ -31,3 +33,18 @@ To run unit test we need to execute:
 cargo test
 ```
 
+## Интеграционные тесты
+
+```
+.
+├── Cargo.toml
+├── src/
+│   ├── main.rs
+│   ├── module1.rs
+│   └── module2/
+│       ├── mod.rs
+│       ├── module2_file1.rs
+│       └── module2_file2.rs
+└── tests/
+    └── integration-tests.rs
+```

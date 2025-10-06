@@ -44,8 +44,8 @@
 * [Cargo](project/cargo.md)
 * [Зависимости](project/dependencies.md)
 * [Создание библиотеки](project/sozdanie-biblioteki.md)
-* [Юнит тесты](project/yunit-testy.md)
-* [Структура проекта](project/project-structure.md)
+* [Тесты](project/testy.md)
+* [Несколько исполняемых файлов](project/project-structure.md)
 * [Многомодульный проект](project/mnogomodulnyi-proekt.md)
 
 ## Стандартная библиотека
