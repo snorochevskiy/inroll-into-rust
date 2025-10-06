@@ -46,6 +46,7 @@
 * [Создание библиотеки](project/sozdanie-biblioteki.md)
 * [Тесты](project/testy.md)
 * [Несколько исполняемых файлов](project/project-structure.md)
+* [Пакет, крэйт, модуль](project/paket-kreit-modul.md)
 * [Многомодульный проект](project/mnogomodulnyi-proekt.md)
 
 ## Стандартная библиотека
