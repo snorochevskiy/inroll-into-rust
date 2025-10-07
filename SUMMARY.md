@@ -47,7 +47,8 @@
 * [Тесты](project/testy.md)
 * [Несколько исполняемых файлов](project/project-structure.md)
 * [Пакет, крэйт, модуль](project/paket-kreit-modul.md)
-* [Многомодульный проект](project/mnogomodulnyi-proekt.md)
+* [Workspace проект](project/workspace-proekt.md)
+* [Условная компиляция](project/uslovnaya-kompilyaciya.md)
 
 ## Стандартная библиотека
 
