@@ -8,7 +8,7 @@
 
 ## Box
 
-Первым указателем, который мы рассмотрим является [**Box**](https://doc.rust-lang.org/std/boxed/struct.Box.html). Мы уже вскольз упоминали его в разделе [#vozvrat-treita-iz-funkcii](treity.md#vozvrat-treita-iz-funkcii "mention").
+Первым указателем, который мы рассмотрим является [**Box**](https://doc.rust-lang.org/std/boxed/struct.Box.html). Мы уже вскользь упоминали его в разделе [#vozvrat-treita-iz-funkcii](treity.md#vozvrat-treita-iz-funkcii "mention").
 
 `Box<T>` — это обобщённый тип, который хранит адрес значения типа `T`, размещённого в куче. `Box` является владельцем данных в куче, т.е. при выходе переменной `Box` из скоупа, происходит автоматическая освобождения соответствующей памяти в куче.
 

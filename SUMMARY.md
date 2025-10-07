@@ -43,12 +43,13 @@
 
 * [Cargo](project/cargo.md)
 * [Зависимости](project/dependencies.md)
-* [Создание библиотеки](project/sozdanie-biblioteki.md)
-* [Тесты](project/testy.md)
-* [Несколько исполняемых файлов](project/project-structure.md)
-* [Пакет, крэйт, модуль](project/paket-kreit-modul.md)
-* [Workspace проект](project/workspace-proekt.md)
+* [Создание библиотеки](project/making-lib.md)
+* [Несколько исполняемых файлов](project/multiple-bin.md)
+* [Пакет, крэйт, модуль](project/package-crate-module.md)
+* [Workspace проект](project/workspace-project.md)
 * [Условная компиляция](project/uslovnaya-kompilyaciya.md)
+* [Тестирование](project/testing.md)
+* [Документация](project/documentation.md)
 
 ## Стандартная библиотека
 
