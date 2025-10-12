@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # Многопоточность
 
 In Rust we can work with OS threads.

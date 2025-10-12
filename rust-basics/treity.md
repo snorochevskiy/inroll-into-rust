@@ -433,3 +433,7 @@ fn main() {
 
 В реализации методов трэйта можно оставить `Self`: `fn make_default() -> Self`.\
 Но можно и заменить на имя конкретного типа `fn make_default() -> Person` — эффект будет одинаковым.
+
+## unsafe trait
+
+TODO

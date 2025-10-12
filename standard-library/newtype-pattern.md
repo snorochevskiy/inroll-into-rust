@@ -1,3 +1,7 @@
+---
+hidden: true
+---
+
 # Newtype pattern
 
 One on the most annoying Rust rules – is so called “Orphan rule”. It states that when you want to implement a trait for a type, this should be done in a crate that owns either the trait, or the type (or both).
