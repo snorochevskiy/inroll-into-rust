@@ -52,13 +52,13 @@
 
 ## Стандартная библиотека <a href="#standard-library" id="standard-library"></a>
 
-* [Основные трейты](standard-library/common-traits.md)
-* [Глобальные данные](standard-library/globalnye-dannye.md)
-* [Newtype pattern](standard-library/newtype-pattern.md)
-* [Файловая система](standard-library/failovaya-sistema.md)
-* [Многопоточность](standard-library/mnogopotochnost.md)
-* [Any](standard-library/any.md)
-* [Структура стандартной библиотеки](standard-library/struktura-standartnoi-biblioteki.md)
+* [Основные трейты](standartnaya-biblioteka/osnovnye-treity.md)
+* [Глобальные данные](standartnaya-biblioteka/globalnye-dannye.md)
+* [Newtype pattern](standartnaya-biblioteka/newtype-pattern.md)
+* [Файловая система](standartnaya-biblioteka/failovaya-sistema.md)
+* [Многопоточность](standartnaya-biblioteka/mnogopotochnost.md)
+* [Any](standartnaya-biblioteka/any.md)
+* [Структура стандартной библиотеки](standartnaya-biblioteka/struktura-standartnoi-biblioteki.md)
 
 ## Асинхронность
 
