@@ -54,7 +54,7 @@
 
 * [Основные трейты](standartnaya-biblioteka/osnovnye-treity.md)
 * [Глобальные данные](standartnaya-biblioteka/globalnye-dannye.md)
-* [Файловая система](standartnaya-biblioteka/failovaya-sistema.md)
+* [Файловая система](standard-library/file-system.md)
 * [Многопоточность](standartnaya-biblioteka/mnogopotochnost.md)
 * [Any](standartnaya-biblioteka/any.md)
 * [Структура стандартной библиотеки](standartnaya-biblioteka/struktura-standartnoi-biblioteki.md)
