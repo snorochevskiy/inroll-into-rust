@@ -54,7 +54,6 @@
 
 * [Основные трейты](standartnaya-biblioteka/osnovnye-treity.md)
 * [Глобальные данные](standartnaya-biblioteka/globalnye-dannye.md)
-* [Newtype pattern](standartnaya-biblioteka/newtype-pattern.md)
 * [Файловая система](standartnaya-biblioteka/failovaya-sistema.md)
 * [Многопоточность](standartnaya-biblioteka/mnogopotochnost.md)
 * [Any](standartnaya-biblioteka/any.md)
@@ -68,6 +67,7 @@
 
 ## Типичне задачи
 
+* [Newtype pattern](tipichne-zadachi/newtype-pattern.md)
 * [Обработка ошибок](tipichne-zadachi/obrabotka-oshibok.md)
 * [Глобальные данные](tipichne-zadachi/globalnye-dannye.md)
 * [Сериализация](tipichne-zadachi/serializaciya.md)
