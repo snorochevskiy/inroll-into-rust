@@ -57,7 +57,7 @@
 * [Файловая система](standard-library/file-system.md)
 * [I/O](standard-library/i-o.md)
 * [panic](standard-library/panic.md)
-* [Многопоточность](standartnaya-biblioteka/mnogopotochnost.md)
+* [Многопоточность](standard-library/multithreading.md)
 * [Any](standartnaya-biblioteka/any.md)
 * [Структура стандартной библиотеки](standartnaya-biblioteka/struktura-standartnoi-biblioteki.md)
 
