@@ -65,3 +65,9 @@ fn main() {
 }
 ```
 
+
+
+[https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html](https://doc.rust-lang.org/std/cell/struct.UnsafeCell.html)
+
+
+

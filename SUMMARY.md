@@ -7,6 +7,7 @@
 ## Основы языка <a href="#rust-basics" id="rust-basics"></a>
 
 * [Первый взгляд](rust-basics/first-look.md)
+* [Безопасный Rust](rust-basics/bezopasnyi-rust.md)
 * [Переменные](rust-basics/variables.md)
 * [Примитивные типы данных](rust-basics/primitive-types.md)
 * [Печать на консоль](rust-basics/console-output.md)
@@ -23,7 +24,7 @@
 * [Владение](rust-basics/ownership.md)
 * [Лайфтаймы](rust-basics/lifetimes.md)
 * [Декларативные макросы](rust-basics/declarative-macro.md)
-* [Unsafe](rust-basics/unsafe.md)
+* [Указатели](rust-basics/ukazateli.md)
 * [Структуры](rust-basics/struktury.md)
 * [Модули](rust-basics/moduli.md)
 * [Трэйты](rust-basics/treity.md)
@@ -53,12 +54,12 @@
 ## Стандартная библиотека <a href="#standard-library" id="standard-library"></a>
 
 * [Основные трейты](standartnaya-biblioteka/osnovnye-treity.md)
+* [Any](standartnaya-biblioteka/any.md)
 * [Глобальные данные](standartnaya-biblioteka/globalnye-dannye.md)
 * [Файловая система](standard-library/file-system.md)
 * [I/O](standard-library/i-o.md)
-* [panic](standard-library/panic.md)
+* [Паника](standard-library/panic.md)
 * [Многопоточность](standard-library/multithreading.md)
-* [Any](standartnaya-biblioteka/any.md)
 * [Структура стандартной библиотеки](standartnaya-biblioteka/struktura-standartnoi-biblioteki.md)
 
 ## Асинхронность
