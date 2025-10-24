@@ -55,11 +55,11 @@
 
 * [Основные трейты](standartnaya-biblioteka/osnovnye-treity.md)
 * [Any](standartnaya-biblioteka/any.md)
-* [Глобальные данные](standartnaya-biblioteka/globalnye-dannye.md)
 * [Файловая система](standard-library/file-system.md)
 * [I/O](standard-library/i-o.md)
 * [Паника](standard-library/panic.md)
 * [Многопоточность](standard-library/multithreading.md)
+* [Глобальные данные](standartnaya-biblioteka/globalnye-dannye.md)
 * [Структура стандартной библиотеки](standartnaya-biblioteka/struktura-standartnoi-biblioteki.md)
 
 ## Асинхронность
