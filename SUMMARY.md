@@ -55,11 +55,12 @@
 
 * [Основные трейты](standartnaya-biblioteka/osnovnye-treity.md)
 * [Any](standartnaya-biblioteka/any.md)
+* [Коллекции](standard-library/kollekcii.md)
 * [Файловая система](standard-library/file-system.md)
 * [I/O](standard-library/i-o.md)
 * [Паника](standard-library/panic.md)
 * [Многопоточность](standard-library/multithreading.md)
-* [Глобальные данные](standartnaya-biblioteka/globalnye-dannye.md)
+* [Глобальные данные](standard-library/global-data.md)
 * [Структура стандартной библиотеки](standartnaya-biblioteka/struktura-standartnoi-biblioteki.md)
 
 ## Асинхронность
@@ -72,7 +73,6 @@
 
 * [Newtype pattern](tipichne-zadachi/newtype-pattern.md)
 * [Обработка ошибок](tipichne-zadachi/obrabotka-oshibok.md)
-* [Глобальные данные](tipichne-zadachi/globalnye-dannye.md)
 * [Сериализация](tipichne-zadachi/serializaciya.md)
 
 ## Веб сервис на Rust
