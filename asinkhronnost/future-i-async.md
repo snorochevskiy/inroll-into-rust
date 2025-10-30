@@ -1,4 +1,8 @@
-# Concurrency
+---
+hidden: true
+---
+
+# Future и async
 
 Rust concurrency approach is very flexible because it separates an abstraction of asynchronous code and the way how it executed.
 
@@ -8,7 +12,7 @@ The key components are:
 * Future trait
 * async runtime
 
-## Async
+## Async API
 
 “async” keyword allows to define a function that is to be executed concurrently.
 

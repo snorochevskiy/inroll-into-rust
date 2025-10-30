@@ -47,6 +47,7 @@
 * [Несколько исполняемых файлов](project/multiple-bin.md)
 * [Пакет, крэйт, модуль](project/package-crate-module.md)
 * [Workspace проект](project/workspace-project.md)
+* [build скрипт](project/build-skript.md)
 * [Условная компиляция](project/uslovnaya-kompilyaciya.md)
 * [Тестирование](project/testing.md)
 * [Документация](project/documentation.md)
@@ -55,7 +56,7 @@
 
 * [Основные трейты](standartnaya-biblioteka/osnovnye-treity.md)
 * [Any](standartnaya-biblioteka/any.md)
-* [Коллекции](standard-library/kollekcii.md)
+* [Коллекции](standard-library/collections.md)
 * [Файловая система](standard-library/file-system.md)
 * [I/O](standard-library/i-o.md)
 * [Паника](standard-library/panic.md)
@@ -65,7 +66,8 @@
 
 ## Асинхронность
 
-* [Concurrency](asinkhronnost/concurrency.md)
+* [Об асинхронности](asinkhronnost/ob-asinkhronnosti.md)
+* [Future и async](asinkhronnost/future-i-async.md)
 * [Асинхронные рантаймы](asinkhronnost/asinkhronnye-rantaimy.md)
 * [Tokio](asinkhronnost/tokio.md)
 
