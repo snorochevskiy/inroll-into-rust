@@ -66,8 +66,8 @@
 
 ## Асинхронность
 
-* [Об асинхронности](asinkhronnost/ob-asinkhronnosti.md)
-* [Future и async](asinkhronnost/future-i-async.md)
+* [Потоки и ввод/вывод](asinkhronnost/threads-and-io.md)
+* [Асинхронность в Rust](asinkhronnost/async-in-rust.md)
 * [Асинхронные рантаймы](asinkhronnost/asinkhronnye-rantaimy.md)
 * [Tokio](asinkhronnost/tokio.md)
 
