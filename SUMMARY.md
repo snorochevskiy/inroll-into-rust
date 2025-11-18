@@ -2,7 +2,7 @@
 
 * [Предисловие](README.md)
 * [На кого расчитана книга](na-kogo-raschitana-kniga.md)
-* [Установка](ustanovka.md)
+* [Установка Rust](setup-rust.md)
 
 ## Основы языка <a href="#rust-basics" id="rust-basics"></a>
 
@@ -68,7 +68,6 @@
 
 * [Потоки и ввод/вывод](asinkhronnost/threads-and-io.md)
 * [Асинхронность в Rust](asinkhronnost/async-in-rust.md)
-* [Асинхронные рантаймы](asinkhronnost/asinkhronnye-rantaimy.md)
 * [Tokio](asinkhronnost/tokio.md)
 
 ## Типичне задачи
