@@ -20,8 +20,8 @@
 * [**ToOwned**](https://doc.rust-lang.org/std/borrow/trait.ToOwned.html) — позволяет получать объект (для владения) из ссылки (как правило, путём клонирования)
 * [**Drop**](https://doc.rust-lang.org/std/ops/trait.Drop.html) — обявляет метод-деструктор, который вызывается при выходе объекта из скоупа
 * [**Sized**](https://doc.rust-lang.org/std/marker/trait.Sized.html) — маркерный трэйт, который автоматически имплементируется компилятором, если размер типа известен на этапе компиляции
-* [**Sync**](https://doc.rust-lang.org/std/marker/trait.Sync.html) — маркерный трэйт, который автоматически добавляется компилятором к типам, к значениям которых безопасно обращаться из нескольких потоков. О нём мы подробнее поговорим в главе про [multithreading.md](../standard-library/multithreading.md "mention").
-* [**Send**](https://doc.rust-lang.org/std/marker/trait.Send.html) — маркерный трэйт, который автоматически добавляется компилятором для типов, чьи значения могут передаваться в другой поток. О нём мы так же поговорим в главе про [multithreading.md](../standard-library/multithreading.md "mention").
+* [**Sync**](https://doc.rust-lang.org/std/marker/trait.Sync.html) — маркерный трэйт, который автоматически добавляется компилятором к типам, к значениям которых безопасно обращаться из нескольких потоков. О нём мы подробнее поговорим в главе про [multithreading.md](multithreading.md "mention").
+* [**Send**](https://doc.rust-lang.org/std/marker/trait.Send.html) — маркерный трэйт, который автоматически добавляется компилятором для типов, чьи значения могут передаваться в другой поток. О нём мы так же поговорим в главе про [multithreading.md](multithreading.md "mention").
 
 ## Подробнее о Eq и PartialEq
 

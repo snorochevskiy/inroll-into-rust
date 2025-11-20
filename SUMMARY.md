@@ -52,17 +52,17 @@
 * [Тестирование](project/testing.md)
 * [Документация](project/documentation.md)
 
-## Стандартная библиотека <a href="#standard-library" id="standard-library"></a>
+## Погружаемся в Rust <a href="#dive-deeper-into-rust" id="dive-deeper-into-rust"></a>
 
-* [Основные трейты](standartnaya-biblioteka/osnovnye-treity.md)
-* [Any](standartnaya-biblioteka/any.md)
-* [Коллекции](standard-library/collections.md)
-* [Файловая система](standard-library/file-system.md)
-* [I/O](standard-library/i-o.md)
-* [Паника](standard-library/panic.md)
-* [Многопоточность](standard-library/multithreading.md)
-* [Глобальные данные](standard-library/global-data.md)
-* [Структура стандартной библиотеки](standartnaya-biblioteka/struktura-standartnoi-biblioteki.md)
+* [Основные трейты](dive-deeper-into-rust/common-traits.md)
+* [Any](dive-deeper-into-rust/any.md)
+* [Коллекции](dive-deeper-into-rust/collections.md)
+* [Файловая система](dive-deeper-into-rust/file-system.md)
+* [I/O](dive-deeper-into-rust/i-o.md)
+* [Паника](dive-deeper-into-rust/panic.md)
+* [Многопоточность](dive-deeper-into-rust/multithreading.md)
+* [Глобальные данные](dive-deeper-into-rust/global-data.md)
+* [Структура стандартной библиотеки](dive-deeper-into-rust/struktura-standartnoi-biblioteki.md)
 
 ## Асинхронность
 
