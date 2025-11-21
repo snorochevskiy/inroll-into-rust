@@ -59,9 +59,13 @@
 * [Коллекции](dive-deeper-into-rust/collections.md)
 * [Файловая система](dive-deeper-into-rust/file-system.md)
 * [I/O](dive-deeper-into-rust/i-o.md)
+* [Newtype паттерн](dive-deeper-into-rust/newtype-pattern.md)
 * [Паника](dive-deeper-into-rust/panic.md)
 * [Многопоточность](dive-deeper-into-rust/multithreading.md)
 * [Глобальные данные](dive-deeper-into-rust/global-data.md)
+* [Обработка ошибок](dive-deeper-into-rust/obrabotka-oshibok.md)
+* [Сериализация](dive-deeper-into-rust/serializaciya.md)
+* [Время](dive-deeper-into-rust/vremya.md)
 * [Структура стандартной библиотеки](dive-deeper-into-rust/struktura-standartnoi-biblioteki.md)
 
 ## Асинхронность
@@ -69,12 +73,6 @@
 * [Потоки и ввод/вывод](asinkhronnost/threads-and-io.md)
 * [Асинхронность в Rust](asinkhronnost/async-in-rust.md)
 * [Tokio](asinkhronnost/tokio.md)
-
-## Типичне задачи
-
-* [Newtype pattern](tipichne-zadachi/newtype-pattern.md)
-* [Обработка ошибок](tipichne-zadachi/obrabotka-oshibok.md)
-* [Сериализация](tipichne-zadachi/serializaciya.md)
 
 ## Веб сервис на Rust
 
