@@ -63,17 +63,17 @@
 * [Паника](dive-deeper-into-rust/panic.md)
 * [Многопоточность](dive-deeper-into-rust/multithreading.md)
 * [Глобальные данные](dive-deeper-into-rust/global-data.md)
-* [Обработка ошибок](dive-deeper-into-rust/obrabotka-oshibok.md)
+* [Обработка ошибок](dive-deeper-into-rust/error-handling.md)
 * [Сериализация](dive-deeper-into-rust/serializaciya.md)
 * [Время](dive-deeper-into-rust/vremya.md)
 * [Структура стандартной библиотеки](dive-deeper-into-rust/struktura-standartnoi-biblioteki.md)
 
-## Асинхронность
+## Асинхронность <a href="#async" id="async"></a>
 
-* [Потоки и ввод/вывод](asinkhronnost/threads-and-io.md)
-* [Асинхронность в Rust](asinkhronnost/async-in-rust.md)
-* [Tokio](asinkhronnost/tokio.md)
+* [Потоки и ввод/вывод](async/threads-and-io.md)
+* [Асинхронность в Rust](async/async-in-rust.md)
+* [Tokio](async/tokio.md)
 
-## Веб сервис на Rust
+## Веб сервис на Rust <a href="#web" id="web"></a>
 
-* [Обзор экосистемы](veb-servis-na-rust/obzor-ekosistemy.md)
+* [Обзор экосистемы](web/obzor-ekosistemy.md)
