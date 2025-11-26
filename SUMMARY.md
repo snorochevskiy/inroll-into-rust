@@ -77,3 +77,4 @@
 ## Веб сервис на Rust <a href="#web" id="web"></a>
 
 * [Обзор экосистемы](web/obzor-ekosistemy.md)
+* [Axum](web/axum.md)
