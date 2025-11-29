@@ -64,7 +64,7 @@
 * [Многопоточность](dive-deeper-into-rust/multithreading.md)
 * [Глобальные данные](dive-deeper-into-rust/global-data.md)
 * [Обработка ошибок](dive-deeper-into-rust/error-handling.md)
-* [Сериализация](dive-deeper-into-rust/serializaciya.md)
+* [Сериализация](dive-deeper-into-rust/serialization.md)
 * [Время](dive-deeper-into-rust/vremya.md)
 * [Структура стандартной библиотеки](dive-deeper-into-rust/struktura-standartnoi-biblioteki.md)
 
@@ -76,5 +76,5 @@
 
 ## Веб сервис на Rust <a href="#web" id="web"></a>
 
-* [Обзор экосистемы](web/obzor-ekosistemy.md)
-* [Axum](web/axum.md)
+* [Обзор экосистемы](web/backend-ecosystem.md)
+* [Axum - основы](web/axum-basics.md)
