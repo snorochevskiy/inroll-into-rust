@@ -78,3 +78,9 @@
 
 * [Обзор экосистемы](web/backend-ecosystem.md)
 * [Axum - основы](web/axum-basics.md)
+* [Состояние бекенда](web/sostoyanie-bekenda.md)
+* [Экстракторы](web/ekstraktory.md)
+* [Мидлваре](web/midlvare.md)
+* [Конфигурация приложения](web/konfiguraciya-prilozheniya.md)
+* [SLQx](web/slqx.md)
+* [Документирование API](web/dokumentirovanie-api.md)
