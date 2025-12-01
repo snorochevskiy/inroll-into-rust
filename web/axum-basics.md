@@ -112,7 +112,7 @@ async fn hello() -> &'static str {
   Например, для `Result<String, String>` при значении `Ok("good".to_string())` будет сформирован ответ с кодом 200 и телом содержащим строку "good", а при значении `Err("bad".to_string())` — ответ, тоже, с кодом 200 и телом содержащим строку "bad".
 * [Body](https://docs.rs/axum/latest/axum/body/struct.Body.html) — ответ с кодом 200 и телом хранимым в объекте `Body`.
 * `Vec<u8>` и `Box<[u8]>` — ответ с кодом 200, заголовоком `content-type` равным `application/octet-stream` и телом содержащим указанные байты.
-* [Json\<T>](https://docs.rs/axum/latest/axum/struct.Json.html) — ответ с кодом 200, заголовоком `content-type:`` ``application/json` и телом, содержащим текст с JSON представлением переданного значения.
+* [Json\<T>](https://docs.rs/axum/latest/axum/struct.Json.html) — ответ с кодом 200, заголовоком `content-type: application/json` и телом, содержащим текст с JSON представлением переданного значения.
 
 Рассмотрим несколько примеров:
 
@@ -470,3 +470,74 @@ async fn create_user(Json(input): Json<CreateUserRequest>) -> Response {
 ```
 
 Таким образом, мы смогли сделать код обработчика вдвое короче.
+
+### HTTP заголовки запроса
+
+В функцию-обработчик запроса можно заинжектить не только аргументы пути и квери параметры, но и HTTP заголовки запроса. Делается это при помощи типа обёртки [HeaderMap](https://docs.rs/ajars_axum/latest/ajars_axum/axum/http/header/struct.HeaderMap.html).
+
+Например, так мы можем считать все HTTP заголовки, полученные в запросе:
+
+```rust
+use axum::{Router, http::HeaderMap, routing::get};
+
+#[tokio::main]
+async fn main() {
+    let app = Router::new().route("/hello", get(hello));
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await.unwrap();
+    axum::serve(listener, app).await.unwrap();
+}
+
+async fn hello(headers: HeaderMap) -> String {
+    let headers_string = headers
+        .iter()
+        .map(|(h, v)| format!("{}={}", h.as_str(), String::from_utf8_lossy(v.as_bytes())))
+        .collect::<Vec<_>>()
+        .join(",");
+    format!("Headers: {headers_string}")
+}
+
+```
+
+Если перейти по адресу [http://localhost:8080/hello](http://localhost:8080/hello), то мы должны увидеть что-то наподобии:
+
+Headers: host=localhost:8080,user-agent=Mozilla/5.0 (X11; Linux x86\_64; rv:145.0) Gecko/20100101 Firefox/145.0,accept=text/html,application/xhtml+xml,application/xml;q=0.9,_/_;q=0.8,accept-language=en-US,en;q=0.5,accept-encoding=gzip, deflate, br, zstd,connection=keep-alive,cookie=sessionid=1b040076-cdf8-4ee8-bb52-0dfb786c1fd2,upgrade-insecure-requests=1,sec-fetch-dest=document,sec-fetch-mode=navigate,sec-fetch-site=none,sec-fetch-user=?1,priority=u=0, i
+
+***
+
+Так же можно заинжектить целиком весь объект, представляющий заголовочную часть HTTP запроса. Делается это при помощи типа [Parts](https://docs.rs/http/latest/http/request/struct.Parts.html), который выглядит так:
+
+```rust
+pub struct Parts {
+    pub method: Method,
+    pub uri: Uri,
+    pub version: Version,
+    pub headers: HeaderMap<HeaderValue>,
+    pub extensions: Extensions,
+}
+```
+
+Заинжектив объект `Parts`, мы сможем получить доступ не только к HTTP заголовкам запроса, но и к методу запроса, и к URL пути.
+
+```rust
+use axum::{Router, http::request::Parts, routing::get};
+
+#[tokio::main]
+async fn main() {
+    let app = Router::new().route("/hello", get(hello));
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await.unwrap();
+    axum::serve(listener, app).await.unwrap();
+}
+
+async fn hello(parts: Parts) -> String {
+    let headers_string = parts.headers
+        .iter()
+        .map(|(h, v)| format!("{}={}", h.as_str(), String::from_utf8_lossy(v.as_bytes())))
+        .collect::<Vec<_>>()
+        .join(",");
+    format!(
+        "Method: {}\nURL: {}\nHeaders: {}",
+        parts.method, parts.uri, headers_string
+    )
+}
+```
+
