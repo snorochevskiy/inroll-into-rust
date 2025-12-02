@@ -78,9 +78,9 @@
 
 * [Обзор экосистемы](web/backend-ecosystem.md)
 * [Axum - основы](web/axum-basics.md)
-* [Состояние бекенда](web/axum-state.md)
+* [Состояние бекенда](web/sostoyanie-bekenda.md)
 * [Роутинг](web/routing.md)
-* [Экстракторы](web/extractors.md)
+* [Экстракторы](web/ekstraktory.md)
 * [Мидлваре](web/midlvare.md)
 * [Tower](web/tower.md)
 * [Конфигурация приложения](web/konfiguraciya-prilozheniya.md)

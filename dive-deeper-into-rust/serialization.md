@@ -734,6 +734,69 @@ fn main() {
 }
 ```
 
+## DeserializeOwned
+
+Давайте внимательно посмотрим на трэйт [Deserialize](https://docs.rs/serde/latest/serde/trait.Deserialize.html):
+
+```rust
+pub trait Deserialize<'de>: Sized {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+       where D: Deserializer<'de>;
+}
+```
+
+Как видите, у него имеется лайфтайм параметр `'de`, который привязан к объекту из которого производится десериализация.
+
+В большинстве ситуаций мы даже не замечаем этот лайфтайм параметр, но есть сценарии, где он может стать проблемой.
+
+Например, мы хотим написать генерик структуру, которая хранит значение десериализуемого типа. Мы можем попытаться написать, что подобное:
+
+```rust
+struct Holder<'de, T> where T: Deserialize<'de> {
+    v: T,
+}
+```
+
+Однак компилятор, не позволят скомпилировать такой код, выдав ошибку:
+
+```
+error[E0392]: lifetime parameter `'de` is never used
+  | struct Holder<'de, T>
+  |               ^^^ unused lifetime parameter
+```
+
+Как видите, проблема в том, что лайфтайм параметр используется только в трэйте `Deserialize`, но при этом не используется нигде в теле структуры.
+
+Специально для решения этой проблемы, библиотека serde предоставляет трэйт-обёртку [DeserializeOwned](https://docs.rs/serde/latest/serde/de/trait.DeserializeOwned.html):
+
+```rust
+pub trait DeserializeOwned: for<'de> Deserialize<'de> { }
+```
+
+Объявление `DeserializeOwned` использует HRTB (higher-ranked trait bounds — трэйт границу высшего порядка), чтобы перенести лайфтайм ограничение с самого трэйта, тем самым убрав обязательный трэйт параметр, на наследуемый трэйт.
+
+Используя `DeserializeOwned` мы без проблем можем сделать генерик структуру, которая хранит в себе генерик тип, реализующий `Deserialize`.
+
+```rust
+use serde::de::DeserializeOwned;
+
+#[derive(Debug)]
+struct Holder<T> where T: DeserializeOwned {
+    v: T,
+}
+
+fn deserialize_into_holder<T: DeserializeOwned>(json: &str) -> Holder<T> {
+    let v: T = serde_json::from_str(json).unwrap();
+    Holder { v }
+}
+
+fn main() {
+    let json = String::from("5");
+    let h: Holder<i32> = deserialize_into_holder(&json);
+    println!("{h:?}");
+}
+```
+
 ***
 
 {% hint style="info" %}
