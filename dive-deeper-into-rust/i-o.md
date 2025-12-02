@@ -4,5 +4,10 @@ hidden: true
 
 # I/O
 
-[https://doc.rust-lang.org/std/io/index.html](https://doc.rust-lang.org/std/io/index.html)
+{% embed url="https://doc.rust-lang.org/std/io/index.html" %}
 
+
+
+Bytes
+
+Cursor
