@@ -135,7 +135,7 @@ fn print_introduction_$Dog(v: &Dog) {
 
 Таким образом, уже при компиляции, каждый из сгенерированных вариантов функции `print_introduction` будет знать с каким именно конкретным типом он работает, а значит ему будет известен адрес нужного метода `introduce` именно для того типа, с которым работает этот вариант `print_introduction`.
 
-<img src="../.gitbook/assets/file.excalidraw (2) (1) (1).svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (2) (1) (1) (1).svg" alt="" class="gitbook-drawing">
 
 Все адреса методов статичны, поэтому диспетчеризация и называется статической.<br>
 

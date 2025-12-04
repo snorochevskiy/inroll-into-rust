@@ -65,6 +65,7 @@
 * [Глобальные данные](dive-deeper-into-rust/global-data.md)
 * [Обработка ошибок](dive-deeper-into-rust/error-handling.md)
 * [Сериализация](dive-deeper-into-rust/serialization.md)
+* [Логирование](dive-deeper-into-rust/logirovanie.md)
 * [Время](dive-deeper-into-rust/vremya.md)
 * [Структура стандартной библиотеки](dive-deeper-into-rust/struktura-standartnoi-biblioteki.md)
 
@@ -81,7 +82,7 @@
 * [Состояние бекенда](web/sostoyanie-bekenda.md)
 * [Роутинг](web/routing.md)
 * [Экстракторы](web/ekstraktory.md)
-* [Мидлваре](web/midlvare.md)
+* [Мидлваре](web/middleware.md)
 * [Tower](web/tower.md)
 * [Конфигурация приложения](web/konfiguraciya-prilozheniya.md)
 * [SLQx](web/slqx.md)
