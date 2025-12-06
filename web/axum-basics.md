@@ -148,6 +148,43 @@ async fn handler_6() -> Json<Person> {
 }
 ```
 
+## Замыкание как обработчик запроса
+
+В качестве обработчика запроса можно так же использовать замыкание, которое захватывает значения из внешнего контекста:
+
+```rust
+use axum::{Router, routing::get};
+
+#[tokio::main]
+async fn main() {
+    // Значение, для захвата замыканием
+    let greeting = "Hello!".to_string();
+
+    let app = Router::new()
+        .route("/hello", get(async move || format!("{}", greeting)));
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:8080").await.unwrap();
+    axum::serve(listener, app).await.unwrap();
+}
+```
+
+{% hint style="info" %}
+К сожалению, в роутере можно использовать только замыкание созданное непосредственно в той же функции, в которой и сам роутер. На данный момент, органичения языка Rust не позволят создать функцию, которая вернёт async замыкание, и использовать вызов этой функции в роутере.
+
+То есть поптыка написать функцию:
+
+```rust
+fn make_hello_handler(
+    greeting: String
+) -> impl Fn() -> impl Future<Output = String> {
+    async move || format("{}", greeting)
+}
+```
+
+завершится с ошибкой, поясняющей что нельзя использовать `impl Трэйт` в качестве результата для `Fn`: [https://github.com/rust-lang/rust/issues/99697](https://github.com/rust-lang/rust/issues/99697)
+
+В главе про [tower.md](tower.md "mention") мы узнаем как обойти это ограничение.
+{% endhint %}
+
 ## Аргументы запроса
 
 Существует два способа передачи аргументов через строку URL: параметры пути (path parameters) и параметры запроса (query parameters).

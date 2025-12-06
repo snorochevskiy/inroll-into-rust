@@ -85,5 +85,6 @@
 * [Мидлваре](web/middleware.md)
 * [Tower](web/tower.md)
 * [Конфигурация приложения](web/konfiguraciya-prilozheniya.md)
+* [Graseful shutdown](web/graseful-shutdown.md)
 * [SLQx](web/slqx.md)
 * [Документирование API](web/dokumentirovanie-api.md)
