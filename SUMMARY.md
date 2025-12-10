@@ -67,6 +67,7 @@
 * [Сериализация](dive-deeper-into-rust/serialization.md)
 * [Логирование](dive-deeper-into-rust/logirovanie.md)
 * [Время](dive-deeper-into-rust/vremya.md)
+* [Конфигурация приложения](dive-deeper-into-rust/konfiguraciya-prilozheniya.md)
 * [Структура стандартной библиотеки](dive-deeper-into-rust/struktura-standartnoi-biblioteki.md)
 
 ## Асинхронность <a href="#async" id="async"></a>
@@ -84,7 +85,6 @@
 * [Экстракторы](web/ekstraktory.md)
 * [Мидлваре](web/middleware.md)
 * [Tower](web/tower.md)
-* [Конфигурация приложения](web/konfiguraciya-prilozheniya.md)
-* [Graseful shutdown](web/graseful-shutdown.md)
-* [SLQx](web/slqx.md)
+* [Завершение работы сервера](web/graceful_shutdown.md)
+* [SQLx](web/sqlx.md)
 * [Документирование API](web/dokumentirovanie-api.md)
