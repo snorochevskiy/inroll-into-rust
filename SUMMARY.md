@@ -87,4 +87,5 @@
 * [Tower](web/tower.md)
 * [Завершение работы сервера](web/graceful_shutdown.md)
 * [SQLx](web/sqlx.md)
+* [Версионирование структуры БД](web/versionirovanie-struktury-bd.md)
 * [Документирование API](web/dokumentirovanie-api.md)
