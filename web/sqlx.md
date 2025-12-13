@@ -196,7 +196,7 @@ async fn main() {
 
 Для выборки данных, SQLx предлагает тип [QueryAs](https://docs.rs/sqlx/latest/sqlx/query/struct.QueryAs.html), который позволяет выполнить SQL запрос, и сконвертировать ответ от БД в обекты структур соответствующего типа.
 
-Объект `QueryAs`, как правило, создаётся при помощи макроса [sqlx::query\_as](https://docs.rs/sqlx/latest/sqlx/fn.query_as.html).
+Объект `QueryAs`, как правило, создаётся при помощи функции [sqlx::query\_as](https://docs.rs/sqlx/latest/sqlx/fn.query_as.html).
 
 ```rust
 let query: QueryAs<'_, Postgres, ТипРезультата, PgArguments> = sqlx::query_as(
@@ -233,8 +233,6 @@ async fn main() {
 ```
 
 Как вы могли заметить, структура, в объекты которой перепаковывается ответ от БД, должна реализовать трэйт [FromRow](https://docs.rs/sqlx/latest/sqlx/trait.FromRow.html), а имена полей структуры должны совпадать с именами соответствующих колонок в результате SQL запроса.
-
-Так же, следует отметить, что `query_as` используется только для выборки данных, которые перепаковываются в объекты структур. Если необходимо выбрать только одну колонку простого типа (число или строка), то вместо `query_as` используется функция [query\_scalar](https://docs.rs/sqlx-core/latest/sqlx_core/query_scalar/fn.query_scalar.html), которая ведёт себя точно так же, но работает с единичными значениями.
 
 Рассмотрим пример выборки из таблицы `accounts` из нашей базы данных:
 
@@ -274,11 +272,6 @@ async fn main() {
         println!("{}: {}, {}", acc.id, acc.owner_name, acc.balance.to_string());
     }
     // 1: John Doe, 1000
-
-    // Выборка одного значения
-    let accounts_count: i64 = sqlx::query_scalar("SELECT COUNT(*) FROM accounts")
-        .fetch_one(&pool).await.unwrap();
-    println!("Number of accounts: {accounts_count}"); // Number of accounts: 2
 }
 ```
 
@@ -288,7 +281,35 @@ async fn main() {
 2. Создать структуру с таким же набором полей, как и набор колонок в результате SQL запроса
 3. Воспользоватьсяфункцией `quary_as`
 
-Теперь давайте рассмотрим пример с JOIN запросом: сделаем запрос, который выбирает всю историю транзакций, при этом делает JOIN на таблицу аккаунтов, чтобы в ответе вместо ID аккаунтов вернуть имена владельцев.
+***
+
+`query_as` используется только для выборки двух и более колонок. Если необходимо выбрать только одну колонку, то вместо `query_as` используется функция [query\_scalar](https://docs.rs/sqlx-core/latest/sqlx_core/query_scalar/fn.query_scalar.html), которая ведёт себя точно так же, но конвертирует результат от БД не в объекты структур, а в простые типы (строки и числа).
+
+Например:
+
+```rust
+use sqlx::{postgres::PgPoolOptions};
+
+#[tokio::main]
+async fn main() {
+    let pool = PgPoolOptions::new()
+        .connect("postgres://postgres:1111@localhost/mydb").await.unwrap();
+
+    // Выборка одной колонки
+    let account_ids: Vec<i64> = sqlx::query_scalar("SELECT id FROM accounts")
+        .fetch_all(&pool).await.unwrap();
+    println!("All IDs: {account_ids:?}"); // All IDs: [1, 2]
+
+    // Выборка одного значения
+    let accounts_count: i64 = sqlx::query_scalar("SELECT COUNT(*) FROM accounts")
+        .fetch_one(&pool).await.unwrap();
+    println!("Number of accounts: {accounts_count}"); // Number of accounts: 2
+}
+```
+
+***
+
+Теперь давайте рассмотрим пример с JOIN запросом: сделаем запрос, который выбирает всю историю транзакций, при этом делает JOIN на таблицу аккаунтов, чтобы в ответе вместо ID аккаунтов отправителя и получателя, вернуть имена их владельцев.
 
 ```rust
 use sqlx::{postgres::PgPoolOptions, prelude::FromRow, types::BigDecimal};
@@ -571,17 +592,17 @@ async fn make_transfer(transfer: &Transfer, pool: &PgPool) -> Result<(),sqlx::Er
     // Начинаем транзакция
     let mut tx = pool.begin().await?;
 
-    // Уменьшаем баланс отправителя на сумму трансфера
-    let _ = sqlx::query("UPDATE accounts SET balance = balance - $1 WHERE id = $2")
-        .bind(&transfer.amount)
-        .bind(&transfer.src_account_id)
-        .execute(&mut *tx)
-        .await?;
-
     // Добавляем сумму трансфера к балансу получателя
     let _ = sqlx::query("UPDATE accounts SET balance = balance + $1 WHERE id = $2")
         .bind(&transfer.amount)
         .bind(&transfer.dst_account_id)
+        .execute(&mut *tx)
+        .await?;
+
+    // Уменьшаем баланс отправителя на сумму трансфера
+    let _ = sqlx::query("UPDATE accounts SET balance = balance - $1 WHERE id = $2")
+        .bind(&transfer.amount)
+        .bind(&transfer.src_account_id)
         .execute(&mut *tx)
         .await?;
 
@@ -618,3 +639,54 @@ async fn main() {
 }
 ```
 
+Теперь, если мы посмотрим на таблицы accounts и transactions, то увидим изменения сделанные программой:
+
+```
+mydb=# select * from accounts;
+ id | owner_name  | balance
+----+-------------+---------
+  1 | John Doe    |  950.00
+  2 | Ivan Ivanov | 2050.00
+```
+
+```
+mydb=# select * from transactions;
+ id | amount | src_account_id | dst_account_id |        tx_timestamp
+----+--------+----------------+----------------+----------------------------
+  1 |  10.00 |              1 |              2 | 2025-12-11 14:00:00
+  2 |  20.00 |              2 |              1 | 2025-12-12 15:00:00
+  3 |  50.00 |              1 |              2 | 2025-12-13 02:00:22.788004
+```
+
+Чтобы увидеть как происходит откат транзакции, давайте попытаемся сделать перевод суммы, которая превышает текущий баланс на счёту отправителя. Это вызовет срабатывание ограничения `CHECK (balance > 0)` в таблице accounts.
+
+<pre class="language-rust"><code class="lang-rust">#[tokio::main]
+async fn main() {
+    let pool = PgPoolOptions::new()
+        .connect("postgres://postgres:1111@localhost/mydb").await.unwrap();
+
+    let transfer = Transfer {
+        src_account_id: 1,
+        dst_account_id: 2,
+<strong>        amount: BigDecimal::from_f64(5000.0).unwrap() // На аккаунте нет столько денег
+</strong>    };
+
+    let _ = make_transfer(&#x26;transfer, &#x26;pool).await.unwrap();
+}
+</code></pre>
+
+Как видите, мы попытались перевести 5000, что привело к завершению с ошибкой второй  UPDATET операции в функции `make_transfer` (той которая вычетает сумму со счета аккаунта).
+
+```
+Database(PgDatabaseError {
+    severity: Error, code: "23514",
+    message: "new row for relation 'accounts' violates check constraint 'accounts_balance_check'",
+    detail: Some("Failing row contains (1, John Doe, -4050.00)."),
+    schema: Some("public"),
+    table: Some("accounts"),
+    constraint: Some("accounts_balance_check"),
+    routine: Some("ExecConstraints")
+})
+```
+
+Транзакция при этом была полностью откачена.
