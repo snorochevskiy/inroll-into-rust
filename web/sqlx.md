@@ -70,14 +70,19 @@ CREATE DATABASE mydb;
 
 Выполните следующий SQL, чтобы создать таблицы и тестовые данные к ним:
 
-<pre class="language-sql"><code class="lang-sql">CREATE TABLE accounts ( -- mydb.public.accounts 
-    id BIGSERIAL PRIMARY KEY,
+```sql
+CREATE SEQUENCE accounts_seq START WITH 1000;
+
+CREATE TABLE accounts ( -- mydb.public.accounts 
+    id BIGINT PRIMARY KEY DEFAULT nextval('accounts_seq'),
     owner_name VARCHAR(255) NOT NULL UNIQUE,
-    balance NUMERIC(10, 2)  NOT NULL DEFAULT 0.00 CHECK (balance > 0)
+    balance NUMERIC(10, 2)  NOT NULL DEFAULT 0.00 CHECK (balance >= 0)
 );
 
-<strong>CREATE TABLE transactions ( -- mydb.public.transactions 
-</strong>    id BIGSERIAL PRIMARY KEY,
+CREATE SEQUENCE transactions_seq START WITH 1000;
+
+CREATE TABLE transactions ( -- mydb.public.transactions 
+    id BIGINT PRIMARY KEY DEFAULT nextval('transactions_seq'),
     amount NUMERIC(10, 2) DEFAULT 0.00,
     src_account_id BIGINT NOT NULL,
     dst_account_id BIGINT NOT NULL,
@@ -94,7 +99,7 @@ INSERT INTO transactions(amount, src_account_id, dst_account_id, tx_timestamp)
 VALUES
 (10.00, 1, 2, TO_TIMESTAMP('2025-12-11 14:00:00', 'YYYY-MM-DD HH24:MI:SS')),
 (20.00, 2, 1, TO_TIMESTAMP('2025-12-12 15:00:00', 'YYYY-MM-DD HH24:MI:SS'));
-</code></pre>
+```
 
 Можете воспользоваться psql командой `\dt`, чтобы посмотреть список таблиц в базе данных, и убедиться, что таблицы accounts и transactions присутствуют.
 
@@ -110,9 +115,9 @@ cargo new test_sqlx
 
 И добавим в `Cargo.toml` развисимости:
 
-* [sqlx](https://crates.io/crates/sqlx) — сама библиотека SQLx,
-* [sqlx-postgres](https://crates.io/crates/sqlx-postgres) — реализации SQLx интерфейсов для PostgreSQL
-* [bigdecimal](https://crates.io/crates/bigdecimal): предоставляет тип [BigDecimal](https://docs.rs/bigdecimal/latest/bigdecimal/struct.BigDecimal.html) —  числовой тип большого размера и без потери точности при совершении операций над числами с плавающей запятой. SQL тип `NUMERIC` обычно конвертируют именно в `BigDecimal`.
+* [sqlx](https://crates.io/crates/sqlx) — сама библиотека SQLx. Фичи:
+  * `postgres` включает в компиляцию реализаии sqlx интерфейсов для PostgreSQL
+  * `bigdecimal` транзитивно подключает библиотеку [bigdecimal](https://crates.io/crates/bigdecimal), которая предоставляет тип [BigDecimal](https://docs.rs/bigdecimal/latest/bigdecimal/struct.BigDecimal.html) —  числовой тип большого размера и без потери точности при совершении операций над числами с плавающей запятой (SQL тип `NUMERIC` обычно конвертируют именно в `BigDecimal`)
 * [chrono](https://crates.io/crates/chrono) — библиотека для работы с датой и временем.
 
 ```toml
@@ -123,10 +128,8 @@ edition = "2024"
 
 [dependencies]
 tokio = { version = "1", features = ["full"] }
-sqlx = { version = "0.8", features = ["postgres", "chrono", "runtime-tokio"]}
-sqlx-postgres = {version = "0.8", features = ["bigdecimal"]}
+sqlx = { version = "0.8", features = ["postgres", "chrono", "runtime-tokio", "bigdecimal"]}
 chrono = "0.4"
-bigdecimal = "0.4"
 ```
 
 Теперь мы можем написать программу, которая подключается в PostgreSQL базе данных. Для создания пула соединений к PostgreSQL используется билдер [PgPoolOptions](https://docs.rs/sqlx/latest/sqlx/postgres/type.PgPoolOptions.html), который позволяет сконфигурировать целый ряд параметров пула соединения, таких как:
@@ -408,9 +411,9 @@ let rows: Vec<PgRow> = query.fetch_all(&pool).await.unwrap();
 
 ```rust
 use chrono::NaiveDateTime;
-use sqlx::{postgres::PgPoolOptions, prelude::FromRow, types::BigDecimal};
+use sqlx::postgres::PgRow;
+use sqlx::{postgres::PgPoolOptions, types::BigDecimal};
 use sqlx::Row;
-use sqlx_postgres::PgRow;
 
 #[tokio::main]
 async fn main() {
@@ -456,8 +459,7 @@ async fn main() {
 Рассмотрим пример:
 
 ```rust
-use sqlx::{postgres::PgPoolOptions, prelude::FromRow, types::BigDecimal};
-use sqlx_postgres::PgQueryResult;
+use sqlx::{postgres::{PgPoolOptions, PgQueryResult}, types::BigDecimal};
 
 #[tokio::main]
 async fn main() {
@@ -506,8 +508,7 @@ qb.build().execute(&pool).await.unwrap(); // выполняем запрос
 Для примера, рассмотрим программу, которая вставляет в таблицу accounts несколько новых записей:
 
 ```rust
-use sqlx::{QueryBuilder, postgres::PgPoolOptions, types::BigDecimal};
-use sqlx_postgres::PgQueryResult;
+use sqlx::{Postgres, QueryBuilder, postgres::{PgPoolOptions, PgQueryResult}, types::BigDecimal};
 
 struct NewAcc {
     owner_name: String,
@@ -527,7 +528,7 @@ async fn main() {
         NewAcc {owner_name: "Name 3".to_string(), balance: BigDecimal::default()},
     ];
 
-    let mut qb: QueryBuilder<'_, sqlx_postgres::Postgres> =
+    let mut qb: QueryBuilder<'_, Postgres> =
         QueryBuilder::new(r#"INSERT INTO accounts(owner_name, balance)"#);
 
     qb.push_values(&new_accounts, |mut builder, acc| {

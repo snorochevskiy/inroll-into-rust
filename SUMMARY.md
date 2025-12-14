@@ -88,4 +88,5 @@
 * [Завершение работы сервера](web/graceful_shutdown.md)
 * [SQLx](web/sqlx.md)
 * [Версионирование структуры БД](web/db-migrate.md)
+* [SQLx макросы](web/sqlx-macros.md)
 * [Документирование API](web/dokumentirovanie-api.md)

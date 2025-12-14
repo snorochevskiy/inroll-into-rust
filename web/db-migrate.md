@@ -1,7 +1,3 @@
----
-hidden: true
----
-
 # Версионирование структуры БД
 
 SQLx предлагает утилиту командной строки [sqlx-cli](https://crates.io/crates/sqlx-cli), которая позволяет:
@@ -32,10 +28,12 @@ cargo sqlx migrate add accounts -r --sequential
 Откроем `0001_accounts.up.sql` и напишем в нём следующее:
 
 ```sql
-CREATE TABLE accounts (
-    id BIGSERIAL PRIMARY KEY,
+CREATE SEQUENCE accounts_seq START WITH 1000;
+
+CREATE TABLE accounts ( -- mydb.public.accounts 
+    id BIGINT PRIMARY KEY DEFAULT nextval('accounts_seq'),
     owner_name VARCHAR(255) NOT NULL UNIQUE,
-    balance NUMERIC(10, 2)  NOT NULL DEFAULT 0.00
+    balance NUMERIC(10, 2)  NOT NULL DEFAULT 0.00 CHECK (balance >= 0)
 );
 ```
 
@@ -43,6 +41,7 @@ CREATE TABLE accounts (
 
 ```sql
 DROP TABLE accounts;
+DROP SEQUENCE accounts_seq;
 ```
 
 Теперь создадим следующую пару файлов для таблицы transactions.
@@ -52,8 +51,10 @@ DROP TABLE accounts;
 Заполним `0002_transactions.up.sql`:
 
 ```sql
-CREATE TABLE transactions (
-    id BIGSERIAL PRIMARY KEY,
+CREATE SEQUENCE transactions_seq START WITH 1000;
+
+CREATE TABLE transactions ( -- mydb.public.transactions 
+    id BIGINT PRIMARY KEY DEFAULT nextval('transactions_seq'),
     amount NUMERIC(10, 2) DEFAULT 0.00,
     src_account_id BIGINT NOT NULL,
     dst_account_id BIGINT NOT NULL,
@@ -67,6 +68,7 @@ CREATE TABLE transactions (
 
 ```sql
 DROP TABLE transactions;
+DROP SEQUENCE transactions_seq;
 ```
 
 Теперь, чтобы протестировать нашу миграцию, давайте создадим новую БД — my\_migration.
