@@ -117,8 +117,9 @@ cargo new test_sqlx
 
 * [sqlx](https://crates.io/crates/sqlx) — сама библиотека SQLx. Фичи:
   * `postgres` включает в компиляцию реализаии sqlx интерфейсов для PostgreSQL
-  * `bigdecimal` транзитивно подключает библиотеку [bigdecimal](https://crates.io/crates/bigdecimal), которая предоставляет тип [BigDecimal](https://docs.rs/bigdecimal/latest/bigdecimal/struct.BigDecimal.html) —  числовой тип большого размера и без потери точности при совершении операций над числами с плавающей запятой (SQL тип `NUMERIC` обычно конвертируют именно в `BigDecimal`)
-* [chrono](https://crates.io/crates/chrono) — библиотека для работы с датой и временем.
+  * `bigdecimal` подключает поддержку типа `BigDecimal`:  SQL тип `NUMERIC` обычно конвертируют именно в `BigDecimal`
+* [chrono](https://crates.io/crates/chrono) — библиотека для работы с датой и временем
+* [bigdecimal](https://crates.io/crates/bigdecimal) — библиотека, которая предоставляет тип [BigDecimal](https://docs.rs/bigdecimal/latest/bigdecimal/struct.BigDecimal.html) —  числовой тип большого размера и без потери точности при совершении операций над числами с плавающей запятой
 
 ```toml
 [package]
@@ -130,6 +131,7 @@ edition = "2024"
 tokio = { version = "1", features = ["full"] }
 sqlx = { version = "0.8", features = ["postgres", "chrono", "runtime-tokio", "bigdecimal"]}
 chrono = "0.4"
+bigdecimal = "0.4"
 ```
 
 Теперь мы можем написать программу, которая подключается в PostgreSQL базе данных. Для создания пула соединений к PostgreSQL используется билдер [PgPoolOptions](https://docs.rs/sqlx/latest/sqlx/postgres/type.PgPoolOptions.html), который позволяет сконфигурировать целый ряд параметров пула соединения, таких как:
