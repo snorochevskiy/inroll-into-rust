@@ -65,8 +65,8 @@
 * [Глобальные данные](dive-deeper-into-rust/global-data.md)
 * [Обработка ошибок](dive-deeper-into-rust/error-handling.md)
 * [Сериализация](dive-deeper-into-rust/serialization.md)
-* [Логирование](dive-deeper-into-rust/logirovanie.md)
 * [Дата и время](dive-deeper-into-rust/date-time.md)
+* [Логирование](dive-deeper-into-rust/logging.md)
 * [Конфигурация приложения](dive-deeper-into-rust/konfiguraciya-prilozheniya.md)
 * [Структура стандартной библиотеки](dive-deeper-into-rust/struktura-standartnoi-biblioteki.md)
 

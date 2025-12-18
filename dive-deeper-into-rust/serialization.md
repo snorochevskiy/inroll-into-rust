@@ -8,7 +8,7 @@ serde не содержит функциональности для сериал
 
 Крэйт serde предоставляет два основных трэйта: [Serialize](https://docs.rs/serde/latest/serde/trait.Serialize.html) и [Deserialize](https://docs.rs/serde/latest/serde/trait.Deserialize.html). Первый необходим для сериализации, второй — для десериализации.
 
-<img src="../.gitbook/assets/file.excalidraw (2) (1).svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (2) (1) (1).svg" alt="" class="gitbook-drawing">
 
 Допустим у нас есть некий тип Employee, который мы хотели бы иметь возможность сериализовать в различные форматы.
 
