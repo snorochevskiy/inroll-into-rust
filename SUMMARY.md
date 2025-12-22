@@ -68,7 +68,6 @@
 * [Дата и время](dive-deeper-into-rust/date-time.md)
 * [Логирование](dive-deeper-into-rust/logging.md)
 * [Конфигурация приложения](dive-deeper-into-rust/konfiguraciya-prilozheniya.md)
-* [Структура стандартной библиотеки](dive-deeper-into-rust/struktura-standartnoi-biblioteki.md)
 
 ## Асинхронность <a href="#async" id="async"></a>
 
@@ -89,4 +88,5 @@
 * [SQLx](web/sqlx.md)
 * [Версионирование структуры БД](web/db-migrate.md)
 * [SQLx макросы](web/sqlx-macros.md)
-* [Документирование API](web/dokumentirovanie-api.md)
+* [Axum и SQLx](web/axum-i-sqlx.md)
+* [Документирование API](web/api-doc.md)
