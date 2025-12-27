@@ -51,6 +51,7 @@
 * [Условная компиляция](project/uslovnaya-kompilyaciya.md)
 * [Тестирование](project/testing.md)
 * [Документация](project/documentation.md)
+* [Clippy](project/clippy.md)
 
 ## Погружаемся в Rust <a href="#dive-deeper-into-rust" id="dive-deeper-into-rust"></a>
 
@@ -67,7 +68,7 @@
 * [Сериализация](dive-deeper-into-rust/serialization.md)
 * [Дата и время](dive-deeper-into-rust/date-time.md)
 * [Логирование](dive-deeper-into-rust/logging.md)
-* [Конфигурация приложения](dive-deeper-into-rust/konfiguraciya-prilozheniya.md)
+* [Конфигурация приложения](dive-deeper-into-rust/config.md)
 
 ## Асинхронность <a href="#async" id="async"></a>
 
@@ -85,6 +86,7 @@
 * [Мидлваре](web/middleware.md)
 * [Tower](web/tower.md)
 * [Завершение работы сервера](web/graceful_shutdown.md)
+* [Тестирование эндпоинтов](web/testirovanie-endpointov.md)
 * [SQLx](web/sqlx.md)
 * [Версионирование структуры БД](web/db-migrate.md)
 * [SQLx макросы](web/sqlx-macros.md)
