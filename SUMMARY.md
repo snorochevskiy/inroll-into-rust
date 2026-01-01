@@ -2,7 +2,12 @@
 
 * [Предисловие](README.md)
 * [На кого расчитана книга](na-kogo-raschitana-kniga.md)
-* [Установка Rust](setup-rust.md)
+
+## Установка <a href="#setup" id="setup"></a>
+
+* [Установка Rust](setup/setup-rust.md)
+* [Установка на Windows](setup/install-on-windows.md)
+* [Установка на Linux](setup/install-on-linux.md)
 
 ## Основы языка <a href="#rust-basics" id="rust-basics"></a>
 
@@ -92,3 +97,4 @@
 * [SQLx макросы](web/sqlx-macros.md)
 * [Axum и SQLx](web/axum-i-sqlx.md)
 * [Документирование API](web/api-doc.md)
+* [Кросс сборка](web/kross-sborka.md)
