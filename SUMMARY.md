@@ -95,6 +95,7 @@
 * [SQLx](web/sqlx.md)
 * [Версионирование структуры БД](web/db-migrate.md)
 * [SQLx макросы](web/sqlx-macros.md)
-* [Axum и SQLx](web/axum-i-sqlx.md)
+* [Axum и SQLx](web/axum-and-sqlx.md)
 * [Документирование API](web/api-doc.md)
+* [Метрики](web/metriki.md)
 * [Кросс сборка](web/kross-sborka.md)
