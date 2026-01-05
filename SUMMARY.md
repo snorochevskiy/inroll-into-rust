@@ -8,6 +8,7 @@
 * [Установка Rust](setup/setup-rust.md)
 * [Установка на Windows](setup/install-on-windows.md)
 * [Установка на Linux](setup/install-on-linux.md)
+* [Среда разработки](setup/sreda-razrabotki.md)
 
 ## Основы языка <a href="#rust-basics" id="rust-basics"></a>
 
@@ -91,7 +92,7 @@
 * [Мидлваре](web/middleware.md)
 * [Tower](web/tower.md)
 * [Завершение работы сервера](web/graceful_shutdown.md)
-* [Тестирование эндпоинтов](web/testirovanie-endpointov.md)
+* [Тестирование эндпоинтов](web/endpoints-testing.md)
 * [SQLx](web/sqlx.md)
 * [Версионирование структуры БД](web/db-migrate.md)
 * [SQLx макросы](web/sqlx-macros.md)
