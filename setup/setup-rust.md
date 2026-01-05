@@ -10,7 +10,7 @@
 
 Сборка прикладной программы на Rust выглядит примерно так:
 
-<img src="../.gitbook/assets/file.excalidraw.svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (1).svg" alt="" class="gitbook-drawing">
 
 То есть при сборке финального исполняемого файла из скомпилированных модулей, линкеру должна быть доступна стандартная библиотека C.
 

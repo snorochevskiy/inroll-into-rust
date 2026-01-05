@@ -97,5 +97,5 @@
 * [SQLx макросы](web/sqlx-macros.md)
 * [Axum и SQLx](web/axum-and-sqlx.md)
 * [Документирование API](web/api-doc.md)
-* [Метрики](web/metriki.md)
+* [Prometheus метрики](web/prometheus-metrics.md)
 * [Кросс сборка](web/kross-sborka.md)

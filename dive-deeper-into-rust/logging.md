@@ -83,7 +83,7 @@ fn main() {
 
 Упрощённо, работа механизма логирования выглядит так:
 
-<img src="../.gitbook/assets/file.excalidraw (1) (1).svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (1) (1) (1).svg" alt="" class="gitbook-drawing">
 
 Для нас, как для пользователей библиотеки tracing, наиболее важным элементом является сам `Subscriber`.
 
@@ -465,7 +465,7 @@ pub struct Subscriber<
 
 Теперь мы можем детализировать нашу диаграмму указав внутреннее устройство стандартного сабскрайбера из библиотеки tracing-subscriber.
 
-<img src="../.gitbook/assets/file.excalidraw (1).svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (1) (1).svg" alt="" class="gitbook-drawing">
 
 Т.е. когда мы конфигурируем логгер просто как:
 
