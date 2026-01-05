@@ -18,7 +18,7 @@
 
 С точки зрения лэйату в памяти, `Box` является так называемой "zero cost abstraction". То есть представляет из себя просто ячейку с адресом, которая располагается на стеке, и не более.
 
-<img src="../.gitbook/assets/file.excalidraw (4).svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (10).svg" alt="" class="gitbook-drawing">
 
 Наиболее простой способ создать `Box` — использовать метод-конструктор `Box::new(T)`, который принимает в качестве аргумента значение, и переносит это значение на кучу.
 
@@ -38,7 +38,7 @@ fn main() {
 
 Для наглядности, давайте напишем классическую структуру данных — односвязанный список.
 
-<img src="../.gitbook/assets/file.excalidraw (16).svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (21).svg" alt="" class="gitbook-drawing">
 
 На первый взгляд, эту конструкцию можно было бы описать так:
 
@@ -158,7 +158,7 @@ fn main() {
 1. Счётчик копий `Rc` уменьшается на `1`.
 2. Если при этом значение счётчика стало равным `0`, то память, в которой хранятся данные, и память, в которой хранится сам счётчик, очищаются.
 
-<img src="../.gitbook/assets/file.excalidraw (5).svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (11).svg" alt="" class="gitbook-drawing">
 
 {% hint style="info" %}
 Проводя аналогию с C++, `Rc` является прямым аналогом умного указателя `shared_ptr`.

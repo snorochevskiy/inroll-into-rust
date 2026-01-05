@@ -379,7 +379,7 @@ println!("{v2:?}"); // [4, 16]
 
 Эта "матрёшка" из вектор-итератора, завёрнутого в `Filter`, и завёрнутого в `Map` выглядит примерно так:
 
-<img src="../.gitbook/assets/file.excalidraw (13).svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (18).svg" alt="" class="gitbook-drawing">
 
 В примере выше, мы обработали вектор, и получали результат тоже в форме вектора (так как в метод `collect` передали тип-агрумент `Vec`). Если бы мы хотели получить результирующий элементы в виде, например, [**HashSet**](https://doc.rust-lang.org/std/collections/struct.HashSet.html) (хэш-множество), то просто должны были бы указать этот вид коллекций в методе `collect()`.
 
@@ -398,7 +398,7 @@ fn main() {
 
 Для большинства коллекций, из стандартной библиотеки, можно получить итератор, и большинство коллекций, из стандартной библиотеки, могут быть построены из итератора методом `collect`. Получается, что итератор — универсальное API для обработки и преобразования типов-коллекций.
 
-<img src="../.gitbook/assets/file.excalidraw (14).svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (19).svg" alt="" class="gitbook-drawing">
 
 Большинство коллекций из сторонних библиотек, так же работают вместе с итераторами.
 
@@ -428,7 +428,7 @@ println!("{sum}"); // 6
 
 Здесь свёртка происходит примерно так:
 
-<img src="../.gitbook/assets/file.excalidraw (15).svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (20).svg" alt="" class="gitbook-drawing">
 
 Возможно, у вас появился вопрос: а для чего нам начальное значение `0`, если в качестве начального значения агрегации мы просто могли использовать первый элемент?
 

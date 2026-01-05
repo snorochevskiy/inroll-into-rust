@@ -165,7 +165,7 @@ fn main() {
 
 Массив из примера выше выглядит в памяти примерно так:
 
-<img src="../.gitbook/assets/file.excalidraw (3) (1).svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (5).svg" alt="" class="gitbook-drawing">
 
 ## Еще раз про перечисление "как в C"
 

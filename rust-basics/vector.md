@@ -41,7 +41,7 @@ fn main() {
 
 Лэйаут (layout) в памяти для вектора, из примера выше, выглядит так:
 
-<img src="../.gitbook/assets/file.excalidraw (7).svg" alt="Vec<i32> memory layout" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (12).svg" alt="Vec<i32> memory layout" class="gitbook-drawing">
 
 Размер по умолчанию для буфера в куче, который вектор изначально создаёт не стандартизирован, но да данной диаграмме мы предположили, что он равен 5.
 

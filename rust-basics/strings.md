@@ -126,7 +126,7 @@ fn main() {
 
 Примерно так эти строки будут располагаться в памяти:
 
-<img src="../.gitbook/assets/file.excalidraw (10).svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (15).svg" alt="" class="gitbook-drawing">
 
 ## Макрос format!
 
@@ -140,3 +140,4 @@ fn main() {
     println!("{s}"); // 3 in the power of the 2 is 9
 }
 ```
+

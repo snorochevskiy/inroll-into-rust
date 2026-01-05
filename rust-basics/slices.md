@@ -25,7 +25,7 @@ fn main() {
 
 В отличии от обычных ссылок, которые, как правило, эфемерны (не представлены отдельными ячейками в памяти), слайсы всегда хранятся в памяти в виде пары полей: адрес первого элемента последовательности и количество элементов.
 
-<img src="../.gitbook/assets/file.excalidraw (8).svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (13).svg" alt="" class="gitbook-drawing">
 
 По умолчанию слайсы, как и ссылки - немутабельный. Для того, чтобы сделать мутабельный слайс, нужно использовать ключевое слово `mut`.
 
@@ -48,4 +48,4 @@ fn main() {
 
 В памяти это соотношение вектора и слайса выглядит так:
 
-<img src="../.gitbook/assets/file.excalidraw (9).svg" alt="" class="gitbook-drawing">
+<img src="../.gitbook/assets/file.excalidraw (14).svg" alt="" class="gitbook-drawing">
