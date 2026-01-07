@@ -97,6 +97,7 @@
 * [Версионирование структуры БД](web/db-migrate.md)
 * [SQLx макросы](web/sqlx-macros.md)
 * [Axum и SQLx](web/axum-and-sqlx.md)
+* [Тестирование с БД](web/testirovanie-s-bd.md)
 * [Документирование API](web/api-doc.md)
 * [Prometheus метрики](web/prometheus-metrics.md)
 * [Кросс сборка](web/cross-compilation.md)

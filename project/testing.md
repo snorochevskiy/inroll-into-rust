@@ -158,3 +158,60 @@ test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 Если нужны какие-то зависимости только для интеграционных тестов (например, dev containers), то в `Cargo.toml` существует отдельная секция зависимостей, которые доступны только для интеграционных тестов — секция `[dev-dependencies]`.
 
 На данном этапе нам нет смысла углубляться в интеграционные тесты. Мы погорим о них подбробнее, когда будем рассматривать написание бекендов.
+
+## cargo-nextest
+
+Если вам не хватает гибкости стандартного `cargo test` раннера тестов, то обратите внимание на [nextest](https://nexte.st/). Этот альтернативный раннер, который:
+
+* выдаёт более информативный вывод о запуске тестов
+* позволяет запускать легковесные тесты параллельно, а тяжеловесные — последовательно
+* позволяет указывать ретраи для тестов
+* позволяет генерировать отчёты в JUnit XML формате
+* и много другое
+
+Чтобы установить nextest выполните команду
+
+```
+cargo install cargo-nextest --locked
+```
+
+После этого, вы можете запускать ваши тесты при помощи
+
+```
+cargo nextest run
+```
+
+Сравните вывод `cargo test` и `cargo nextest`:
+
+{% tabs %}
+{% tab title="test" %}
+```
+$ cargo test
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.21s
+     Running unittests src/main.rs (target/debug/deps/test_rust-ba9e2d97573eceb4)
+
+running 3 tests
+test test_1 ... ok
+test test_2 ... ok
+test test_3 ... ok
+
+test result: ok.
+3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+```
+{% endtab %}
+
+{% tab title="nextest" %}
+```
+$ cargo nextest run
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.05s
+────────────
+ Nextest run ID 06dccce6-29f5-45a0-9ec4-1d9328eaae82 with nextest profile: default
+    Starting 3 tests across 1 binary
+        PASS [   0.006s] test_rust::bin/test_rust test_3
+        PASS [   0.006s] test_rust::bin/test_rust test_2
+        PASS [   0.006s] test_rust::bin/test_rust test_1
+────────────
+     Summary [   0.007s] 3 tests run: 3 passed, 0 skipped
+```
+{% endtab %}
+{% endtabs %}
