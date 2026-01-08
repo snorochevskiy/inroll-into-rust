@@ -8,7 +8,7 @@
 * [Установка Rust](setup/setup-rust.md)
 * [Установка на Windows](setup/install-on-windows.md)
 * [Установка на Linux](setup/install-on-linux.md)
-* [Среда разработки](setup/sreda-razrabotki.md)
+* [Среда разработки](setup/ide.md)
 
 ## Основы языка <a href="#rust-basics" id="rust-basics"></a>
 
