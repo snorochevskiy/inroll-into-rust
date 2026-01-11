@@ -31,7 +31,7 @@ cargo new server
 
 После этого корневой `Cargo.toml` должен иметь содержимое:
 
-```
+```toml
 [workspace]
 resolver = "3"
 members = ["persist", "server"]
@@ -39,7 +39,7 @@ members = ["persist", "server"]
 
 4\) Объявите зависимости
 
-```
+```toml
 [workspace]
 resolver = "3"
 members = ["adder"]
@@ -176,25 +176,14 @@ impl Storage for StorageImpl {
 use bigdecimal::{BigDecimal, FromPrimitive};
 use persist::{Storage, StorageImpl};
 use sqlx::{migrate::Migrator, postgres::{PgConnectOptions, PgPoolOptions}};
-use testcontainers::{
-    core::{IntoContainerPort, WaitFor},
-    runners::AsyncRunner, GenericImage, ImageExt
-};
+use testcontainers::runners::AsyncRunner;
 
 #[tokio::test]
-async fn test_1() {
-    // Запуск контейнера с PostgreSQL
-    let container = GenericImage::new("postgres", "18")
-        .with_wait_for(WaitFor::message_on_stderr(
-            "database system is ready to accept connections"
-        ))
-        .with_exposed_port(5432.tcp())
-        .with_env_var("POSTGRES_PASSWORD", "1111")
-        .start()
-        .await
-        .expect("Postgres started");
+async fn test_create_and_fetch_account() {
+let container = testcontainers_modules::postgres::Postgres::default()
+    .with_password("1111")
+    .start().await.unwrap();
 
-    // Подключение к БД в контейнере
     let connection_options = PgConnectOptions::new()
         .host(&container.get_host().await.unwrap().to_string())
         .port(container.get_host_port_ipv4(5432).await.unwrap())
@@ -204,7 +193,6 @@ async fn test_1() {
     let pool = PgPoolOptions::new()
         .connect_with(connection_options).await.unwrap();
 
-    // Создание таблиц в базе данных при помощи скриптов SQLx миграции
     Migrator::new(std::path::Path::new("../migrations")).await.unwrap()
         .run(&pool).await.unwrap();
 
@@ -218,7 +206,8 @@ async fn test_1() {
     // Создаём новй аккаунт
     let created_acc = sut.create_accounts(
             "Test-Account-1", BigDecimal::from_f64(1000.0).unwrap()
-        ).await.unwrap();
+        ).await
+        .unwrap();
 
     // Выбираем все аккаунты, чтобы убедиться, что свежесозданный аккаунт присутствует
     let accounts = sut.fetch_accounts().await.unwrap();

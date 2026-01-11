@@ -18,10 +18,10 @@ fn sum(a: i32, b: i32) -> i32 {
 }
 
 fn safe_divide(a: f32, b: f32) -> f32 {
-    if b != 0 {
+    if b != 0.0 {
         a / b
     } else {
-        0
+        0.0
     }
 }
 
@@ -29,7 +29,7 @@ fn main() {
     let a = sum(1, 2);
     println!("{a}");
     
-    let b = safe_divide(12, 4);
+    let b = safe_divide(12.0, 4.0);
     println!("{b}");
 }
 ```
@@ -48,8 +48,8 @@ fn sum(a: i32, b: i32,) -> i32 { .. }
 
 ```rust
 fn safe_divide(a: f32, b: f32) -> f32 {
-    if b == 0 {
-        return 0;
+    if b == 0.0 {
+        return 0.0;
     }
     a / b
 }
