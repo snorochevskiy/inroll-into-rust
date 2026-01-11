@@ -81,6 +81,7 @@
 * [Потоки и ввод/вывод](async/threads-and-io.md)
 * [Асинхронность в Rust](async/async-in-rust.md)
 * [Tokio](async/tokio.md)
+* [async\_trait](async/async_trait.md)
 
 ## Веб сервис на Rust <a href="#web" id="web"></a>
 
@@ -95,9 +96,10 @@
 * [Тестирование эндпоинтов](web/endpoints-testing.md)
 * [SQLx](web/sqlx.md)
 * [Версионирование структуры БД](web/db-migrate.md)
+* [Тестирование БД](web/testirovanie-bd.md)
 * [SQLx макросы](web/sqlx-macros.md)
 * [Axum и SQLx](web/axum-and-sqlx.md)
-* [Тестирование с БД](web/testirovanie-s-bd.md)
+* [Структура бекенда](web/struktura-bekenda.md)
 * [Документирование API](web/api-doc.md)
 * [Prometheus метрики](web/prometheus-metrics.md)
 * [Кросс сборка](web/cross-compilation.md)

@@ -63,7 +63,9 @@ VSCode представляет из себя редактор кода, кот�
 * Even Better TOML — подсветка синтаксиса для TOML файлов\
   ([ссылка на страницу плагина](https://marketplace.visualstudio.com/items?itemName=tamasfe.even-better-toml))
 * vscode-icons — более интуитивные пиктограммы в дереве файлов\
-  ([ссылка на страницу плагина](https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons))
+  ([ссылка на страницу плагина](https://marketplace.visualstudio.com/items?itemName=vscode-icons-team.vscode-icons))\
+  После установки выберите в меню:\
+  File -> Preferences -> Theme -> File Icon Theme -> VSCode Icons
 
 ***
 
