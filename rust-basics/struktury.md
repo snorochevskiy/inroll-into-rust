@@ -38,7 +38,7 @@ let переменная = ИмяСтруктуры { поле_1: значени
 
 ```rust
 let person = Person {
-    fists_name: String::from("John"),
+    first_name: String::from("John"),
     last_name: String::from("Doe"),
 };
 ```
@@ -76,7 +76,7 @@ fn main() {
 ```rust
 let fists_name = String::from("John");
 let person = Person {
-    fists_name,
+    first_name,
     last_name: String::from("Doe"),
 };
 ```
@@ -89,7 +89,7 @@ fn main() {
         first_name: "John".to_string(),
         last_name: "Doe".to_string()
     };
-    p.firs_name = "Theodor".to_string();
+    p.first_name = "Theodor".to_string();
 }
 ```
 
@@ -113,7 +113,7 @@ let p1 = Person {
     last_name: "Doe".to_string()
 };
 
-let p2 = Person { first_name: "Robert"to_string(), ..p1};
+let p2 = Person { first_name: "Robert".to_string(), ..p1};
 
 println!("{} {}", p2.first_name, p2.last_name); // Robert Doe
 ```
