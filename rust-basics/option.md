@@ -137,7 +137,7 @@ fn main() {
 ```rust
 fn main() {
     let o: Option<i32> = Some(5);
-    if let Some(v) {
+    if let Some(v) = o {
         println!("Number is {v}");
     } else {
         println!("Number is empty");

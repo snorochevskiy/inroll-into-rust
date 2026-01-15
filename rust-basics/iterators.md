@@ -65,7 +65,7 @@ impl <'a, T> Iterator for MyVecIter<'a, T> {
 ```rust
 fn main() {
     let my_vec = MyVec(vec![1,2,3]);
-    let iterator = MyVecIter { data: &my_vec, index: 0 }; 
+    let iterator = MyVecIter { data: &my_vec, current_ind: 0 }; 
     for n in iterator {
         print!("{n} ");
     }
@@ -78,7 +78,7 @@ fn main() {
 ```rust
 impl <T> MyVec<T> {
     fn iter(&self) -> MyVecIter<'_, T> {
-        MyVecIter { data: self, index: 0 }
+        MyVecIter { data: self, current_ind: 0 }
     }
 }
 ```
@@ -496,7 +496,7 @@ fn main() {
 
 ### find
 
-Метод `filter` принимает предикат, и возвращает первый элемент, который удовлетворяет этому предикату.
+Метод `find` принимает предикат, и возвращает первый элемент, который удовлетворяет этому предикату.
 
 ```rust
 let arr = [1, 3, 5, 7, 8, 9];
